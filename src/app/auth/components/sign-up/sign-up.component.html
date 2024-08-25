@@ -1,0 +1,200 @@
+<form
+  class="row g-4 p-4 shadow rounded bg-light"
+  [formGroup]="signUpForm"
+  (ngSubmit)="onSubmit()"
+>
+  <!-- First Name -->
+  <div class="col-md-6">
+    <label for="firstName" class="form-label">First Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="firstName"
+      formControlName="firstName"
+      placeholder="Enter your first name"
+    />
+    <div
+      *ngIf="
+        signUpForm.get('firstName')?.touched &&
+        signUpForm.get('firstName')?.invalid
+      "
+      class="text-danger"
+    >
+      <small *ngIf="signUpForm.get('firstName')?.errors?.['required']"
+        >First Name is required.</small
+      >
+      <small
+        *ngIf="signUpForm.get('firstName')?.errors?.['nameInvalid']"
+        >{{ signUpForm.get('firstName')?.errors?.['nameInvalid'] }}</small
+      >
+    </div>
+  </div>
+  <!-- Last Name -->
+  <div class="col-md-6">
+    <label for="lastName" class="form-label">Last Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="lastName"
+      formControlName="lastName"
+      placeholder="Enter your last name"
+    />
+    <div
+      *ngIf="
+        signUpForm.get('lastName')?.touched &&
+        signUpForm.get('lastName')?.invalid
+      "
+      class="text-danger"
+    >
+      <small *ngIf="signUpForm.get('lastName')?.errors?.['required']"
+        >Last Name is required.</small
+      >
+      <small
+        *ngIf="signUpForm.get('lastName')?.errors?.['nameInvalid']"
+        >{{ signUpForm.get('lastName')?.errors?.['nameInvalid'] }}</small
+      >
+    </div>
+  </div>
+  <!-- User Name -->
+  <div class="col-md-6">
+    <label for="username" class="form-label">User Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      formControlName="username"
+      placeholder="Choose a username"
+    />
+    <div
+      *ngIf="
+        signUpForm.get('username')?.touched &&
+        signUpForm.get('username')?.invalid
+      "
+      class="text-danger"
+    >
+      <small *ngIf="signUpForm.get('username')?.errors?.['required']"
+        >User Name is required.</small
+      >
+      <small
+        *ngIf="signUpForm.get('username')?.errors?.['nameInvalid']"
+        >{{ signUpForm.get('username')?.errors?.['nameInvalid'] }}</small
+      >
+    </div>
+  </div>
+  <!-- Password -->
+  <div class="col-md-6">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      formControlName="password"
+      placeholder="Create a password"
+    />
+    <div
+      *ngIf="
+        signUpForm.get('password')?.touched &&
+        signUpForm.get('password')?.invalid
+      "
+      class="text-danger"
+    >
+      <small *ngIf="signUpForm.get('password')?.errors?.['required']"
+        >Password is required.</small
+      >
+      <small
+        *ngIf="signUpForm.get('password')?.errors?.['passwordInvalid']"
+        >{{ signUpForm.get('password')?.errors?.['passwordInvalid'] }}</small
+      >
+    </div>
+  </div>
+  <!-- Confirm Password -->
+  <div class="col-md-6">
+    <label for="confirmPassword" class="form-label">Confirm Password</label>
+    <input
+      type="password"
+      (input)="confirmPassword()"
+      class="form-control"
+      id="confirmPassword"
+      formControlName="confirmPassword"
+      placeholder="Confirm your password"
+    />
+    <div
+    *ngIf="
+      signUpForm.get('confirmPassword')?.touched &&
+      signUpForm.get('confirmPassword')?.invalid
+    "
+    class="text-danger"
+  >
+    <small *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']"
+      >Confirming password is required.</small
+    >
+    <small
+      *ngIf="signUpForm.get('confirmPassword')?.errors?.['passwordMismatch']"
+      >Passwords do not match.</small
+    >
+  </div>
+  </div>
+  <!-- Email -->
+  <div class="col-md-6">
+    <label for="email" class="form-label">Email (Optional)</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      formControlName="email"
+      placeholder="Enter your email"
+    />
+    <div
+      *ngIf="
+        signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid
+      "
+      class="text-danger"
+    >
+      <small *ngIf="signUpForm.get('email')?.errors?.['email']"
+        >Invalid email address.</small
+      >
+    </div>
+  </div>
+  <!-- Phone Number -->
+  <div class="col-md-6">
+    <label for="phone" class="form-label">Phone Number (Optional)</label>
+    <input
+      type="tel"
+      class="form-control"
+      id="phone"
+      formControlName="phone"
+      placeholder="Enter your phone number"
+    />
+  </div>
+  <!-- Country -->
+  <div class="col-md-4">
+    <label for="country" class="form-label">Country</label>
+    <select id="country" class="form-select" formControlName="country">
+      <option selected>Choose...</option>
+      <option *ngFor="let country of countries" [value]="country.code">
+        {{ country.name }}
+      </option>
+    </select>
+    <div
+      *ngIf="
+        signUpForm.get('country')?.touched && signUpForm.get('country')?.invalid
+      "
+      class="text-danger"
+    >
+      <small *ngIf="signUpForm.get('country')?.errors?.['required']"
+        >Country is required.</small
+      >
+    </div>
+  </div>
+  <!-- Submit Button -->
+  <div class="col-12 d-flex justify-content-between align-items-center">
+    <button
+      type="submit"
+      class="btn btn-primary px-5"
+      [disabled]="signUpForm.invalid"
+    >
+      Sign Up
+    </button>
+    <a routerLink="/auth/sign-in" class="text-primary">Already have an account?</a>
+  </div>
+</form>

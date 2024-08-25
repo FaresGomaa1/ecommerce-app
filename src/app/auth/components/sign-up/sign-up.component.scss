@@ -1,0 +1,46 @@
+form {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+    .form-label {
+      font-weight: 600;
+      color: #495057;
+    }
+  
+    .form-control {
+      border-radius: 4px;
+      transition: border-color 0.3s ease;
+      &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+    }
+  
+    .text-danger {
+      font-size: 0.875rem;
+    }
+  
+    button[type='submit'] {
+      background-color: #007bff;
+      border-color: #007bff;
+      &:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+      }
+      &:disabled {
+        background-color: #c0c0c0;
+        border-color: #b8b8b8;
+      }
+    }
+  
+    a {
+      font-size: 0.875rem;
+      text-decoration: underline;
+      color: #007bff;
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  }

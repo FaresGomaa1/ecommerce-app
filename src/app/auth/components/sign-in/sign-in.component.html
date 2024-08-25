@@ -1,0 +1,65 @@
+<form
+  class="row g-4 p-4 shadow rounded bg-light"
+  [formGroup]="signIpForm"
+  (ngSubmit)="onSubmit()"
+>
+  <!-- User Name -->
+  <div class="col-md-6">
+    <label for="username" class="form-label">User Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      formControlName="username"
+      placeholder="Enter your username"
+    />
+    <div
+      *ngIf="
+        signIpForm.get('username')?.touched &&
+        signIpForm.get('username')?.invalid
+      "
+      class="text-danger mt-1"
+    >
+      <small *ngIf="signIpForm.get('username')?.errors?.['required']">
+        User Name is required.
+      </small>
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="col-md-6">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      formControlName="password"
+      placeholder="Enter your password"
+    />
+    <div
+      *ngIf="
+        signIpForm.get('password')?.touched &&
+        signIpForm.get('password')?.invalid
+      "
+      class="text-danger mt-1"
+    >
+      <small *ngIf="signIpForm.get('password')?.errors?.['required']">
+        Password is required.
+      </small>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="col-12 d-flex justify-content-between align-items-center">
+    <button
+      type="submit"
+      class="btn btn-primary px-5"
+      [disabled]="signIpForm.invalid"
+    >
+      Sign In
+    </button>
+    <a routerLink="/auth/sign-up" class="text-primary">
+      Create new account?
+    </a>
+  </div>
+</form>
