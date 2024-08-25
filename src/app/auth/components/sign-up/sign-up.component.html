@@ -1,3 +1,15 @@
+<h1>Sign Up</h1>
+<div
+  *ngIf="showAlert"
+  [ngClass]="{
+    'alert-success': isSuccessful,
+    'alert-danger': !isSuccessful
+  }"
+  class="alert"
+  role="alert"
+>
+  {{ alertMessage }}
+</div>
 <form
   class="row g-4 p-4 shadow rounded bg-light"
   [formGroup]="signUpForm"
@@ -10,9 +22,13 @@
       type="text"
       class="form-control"
       id="firstName"
+      [ngClass]="getClass('firstName')"
       formControlName="firstName"
       placeholder="Enter your first name"
     />
+    <div class="valid-feedback">
+      {{ getMessage("firstName") }}
+    </div>
     <div
       *ngIf="
         signUpForm.get('firstName')?.touched &&
@@ -36,9 +52,13 @@
       type="text"
       class="form-control"
       id="lastName"
+      [ngClass]="getClass('lastName')"
       formControlName="lastName"
       placeholder="Enter your last name"
     />
+    <div class="valid-feedback">
+      {{ getMessage("lastName") }}
+    </div>
     <div
       *ngIf="
         signUpForm.get('lastName')?.touched &&
@@ -62,9 +82,13 @@
       type="text"
       class="form-control"
       id="username"
+      [ngClass]="getClass('username')"
       formControlName="username"
       placeholder="Choose a username"
     />
+    <div class="valid-feedback">
+      {{ getMessage("username") }}
+    </div>
     <div
       *ngIf="
         signUpForm.get('username')?.touched &&
@@ -89,8 +113,12 @@
       class="form-control"
       id="password"
       formControlName="password"
+      [ngClass]="getClass('password')"
       placeholder="Create a password"
     />
+    <div class="valid-feedback">
+      {{ getMessage("password") }}
+    </div>
     <div
       *ngIf="
         signUpForm.get('password')?.touched &&
@@ -115,24 +143,28 @@
       (input)="confirmPassword()"
       class="form-control"
       id="confirmPassword"
+      [ngClass]="getClass('confirmPassword')"
       formControlName="confirmPassword"
       placeholder="Confirm your password"
     />
+    <div class="valid-feedback">
+      {{ getMessage("confirmPassword") }}
+    </div>
     <div
-    *ngIf="
-      signUpForm.get('confirmPassword')?.touched &&
-      signUpForm.get('confirmPassword')?.invalid
-    "
-    class="text-danger"
-  >
-    <small *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']"
-      >Confirming password is required.</small
+      *ngIf="
+        signUpForm.get('confirmPassword')?.touched &&
+        signUpForm.get('confirmPassword')?.invalid
+      "
+      class="text-danger"
     >
-    <small
-      *ngIf="signUpForm.get('confirmPassword')?.errors?.['passwordMismatch']"
-      >Passwords do not match.</small
-    >
-  </div>
+      <small *ngIf="signUpForm.get('confirmPassword')?.errors?.['required']"
+        >Confirming password is required.</small
+      >
+      <small
+        *ngIf="signUpForm.get('confirmPassword')?.errors?.['passwordMismatch']"
+        >Passwords do not match.</small
+      >
+    </div>
   </div>
   <!-- Email -->
   <div class="col-md-6">
@@ -141,9 +173,13 @@
       type="email"
       class="form-control"
       id="email"
+      [ngClass]="getClass('email')"
       formControlName="email"
       placeholder="Enter your email"
     />
+    <div class="valid-feedback">
+      {{ getMessage("email") }}
+    </div>
     <div
       *ngIf="
         signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid
@@ -162,14 +198,23 @@
       type="tel"
       class="form-control"
       id="phone"
+      [ngClass]="getClass('phone')"
       formControlName="phone"
       placeholder="Enter your phone number"
     />
+    <div class="valid-feedback">
+      {{ getMessage("phone") }}
+    </div>
   </div>
   <!-- Country -->
   <div class="col-md-4">
     <label for="country" class="form-label">Country</label>
-    <select id="country" class="form-select" formControlName="country">
+    <select
+      id="country"
+      [ngClass]="getClass('country')"
+      class="form-select"
+      formControlName="country"
+    >
       <option selected>Choose...</option>
       <option *ngFor="let country of countries" [value]="country.code">
         {{ country.name }}
@@ -186,6 +231,28 @@
       >
     </div>
   </div>
+  <h3>Address (Optional)</h3>
+  <br>
+    <!-- Street Address -->
+    <div class="col-md-6">
+      <label for="streetAddress" class="form-label">Street Address</label>
+      <input
+        type="text"
+        class="form-control"
+        id="streetAddress"
+        formControlName="streetAddress"
+      />
+    </div>
+    <!-- City -->
+    <div class="col-md-6">
+      <label for="city" class="form-label">City</label>
+      <input
+        type="text"
+        class="form-control"
+        id="city"
+        formControlName="city"
+      />
+    </div>
   <!-- Submit Button -->
   <div class="col-12 d-flex justify-content-between align-items-center">
     <button
@@ -195,6 +262,8 @@
     >
       Sign Up
     </button>
-    <a routerLink="/auth/sign-in" class="text-primary">Already have an account?</a>
+    <a routerLink="/auth/sign-in" class="text-primary"
+      >Already have an account?</a
+    >
   </div>
 </form>

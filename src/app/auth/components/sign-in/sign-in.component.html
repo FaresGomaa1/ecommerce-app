@@ -1,3 +1,18 @@
+<h1>Sign In</h1>
+<div
+  *ngIf="showAlert"
+  [ngClass]="{
+    'alert-success': isSuccessful,
+    'alert-danger': !isSuccessful
+  }"
+  class="alert"
+  role="alert"
+>
+  {{ alertMessage }}
+  <div class="spinner-border text-success" *ngIf="isSuccessful" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
 <form
   class="row g-4 p-4 shadow rounded bg-light"
   [formGroup]="signIpForm"

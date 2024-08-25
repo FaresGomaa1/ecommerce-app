@@ -1,0 +1,162 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar for Categories with Checkboxes -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky">
+        <!-- Categories Section -->
+        <form (ngSubmit)="onSubmit()" #filterForm="ngForm">
+          <h5 class="sidebar-title">Categories</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item" *ngFor="let category of categories">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="category.id"
+                  [(ngModel)]="category.selected"
+                  name="{{ category.id }}"
+                />
+                <label class="form-check-label" [for]="category.id">
+                  {{ category.name }}
+                </label>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Price Range Section -->
+          <h5 class="sidebar-title mt-4">Price</h5>
+          <div class="mb-3">
+            <label for="minPrice" class="form-label">Min Price</label>
+            <input
+              type="number"
+              id="minPrice"
+              class="form-control"
+              [(ngModel)]="minPrice"
+              name="minPrice"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="maxPrice" class="form-label">Max Price</label>
+            <input
+              type="number"
+              id="maxPrice"
+              class="form-control"
+              [(ngModel)]="maxPrice"
+              name="maxPrice"
+            />
+          </div>
+
+          <!-- Rating Section -->
+          <h5 class="sidebar-title mt-4">Rating</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item" *ngFor="let rating of ratings">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="rating.id"
+                  [(ngModel)]="rating.selected"
+                  name="{{ rating.id }}"
+                />
+                <label class="form-check-label" [for]="rating.id">
+                  {{ rating.stars }} stars
+                </label>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Submit Button -->
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+          </div>
+        </form>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <!-- Search and Sort Controls -->
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+        <!-- Search Bar -->
+        <div class="input-group w-100 w-md-50 mb-3 mb-md-0">
+          <input
+            type="text"
+            class="form-control"
+            id="search"
+            placeholder="Search products..."
+          />
+          <button class="btn btn-outline-secondary" type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+
+        <!-- Sort Dropdown -->
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Sort By
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Price</a></li>
+            <li><a class="dropdown-item" href="#">Rating</a></li>
+            <li><a class="dropdown-item" href="#">Name</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Product Cards -->
+      <div class="row">
+        <!-- Product Card -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+          <div class="card product-card shadow-sm">
+            <img
+              src="https://via.placeholder.com/150"
+              class="card-img-top"
+              alt="Product Name"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Product Name</h5>
+              <p class="card-text">$99.99</p>
+              <div class="rating mb-3">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-primary btn-sm">Cart</button>
+                <button class="btn btn-outline-secondary btn-sm">Wishlist</button>
+                <button class="btn btn-link btn-sm">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Repeat Product Card for more products -->
+      </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </main>
+  </div>
+</div>

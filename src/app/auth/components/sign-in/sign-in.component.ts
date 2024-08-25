@@ -1,25 +1,33 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss', '../sign-up/sign-up.component.scss']
+  styleUrls: ['./sign-in.component.scss', '../sign-up/sign-up.component.scss'],
 })
 export class SignInComponent implements OnInit {
   signIpForm!: FormGroup;
+  showAlert: boolean = false;
+  isSuccessful: boolean = false;
+  alertMessage: string = '';
   constructor(private fb: FormBuilder) {}
   ngOnInit(): void {
     this.signIpForm = this.fb.group({
-      username :['', [Validators.required]],
-      password: ['', Validators.required]
-    })
+      username: ['', [Validators.required]],
+      password: ['', Validators.required],
+    });
   }
 
   onSubmit(): void {
     if (this.signIpForm.valid) {
-      console.log('Form Submitted', this.signIpForm.value);
+      console.log('Form submitted successfully:', this.signIpForm.value);
+      this.isSuccessful = true;
+      this.alertMessage = 'You have signed in successfully!';
+    } else {
+      this.isSuccessful = false;
+      this.alertMessage = 'Invalid username or password. Please try again.';
     }
+    this.showAlert = true;
   }
-
 }

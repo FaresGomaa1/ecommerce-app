@@ -1,0 +1,17 @@
+.carousel-image {
+    height: 500px; /* Set your desired height */
+    object-fit: cover; /* Ensure images cover the area without distortion */
+  }
+  
+  .carousel-button {
+    position: absolute;
+    bottom: 20px; /* Adjust the distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .carousel-button .btn {
+    font-size: 1.25rem; /* Adjust the size of the button */
+    padding: 10px 20px;
+  }
+  

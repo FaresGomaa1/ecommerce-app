@@ -4,15 +4,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;
+  showAlert: boolean = false;
+  isSuccessful: boolean = false;
+  alertMessage: string = '';
   countries = [
     { name: 'USA', code: 'US' },
     { name: 'Canada', code: 'CA' },
     { name: 'India', code: 'IN' },
-    // Add more countries as needed
   ];
 
   constructor(private fb: FormBuilder) {}
@@ -24,24 +26,37 @@ export class SignUpComponent implements OnInit {
       username: ['', [Validators.required, this.nameValidator]],
       phone: [''],
       email: ['', [Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), this.passwordValidator]],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(8), this.passwordValidator],
+      ],
       confirmPassword: ['', Validators.required],
       country: ['', Validators.required],
+      streetAddress: [''],
+      city: [''],
     });
   }
 
   onSubmit(): void {
     if (this.signUpForm.valid) {
       console.log('Form Submitted', this.signUpForm.value);
-      // Handle form submission, e.g., send data to the server.
+      this.isSuccessful = true;
+      this.alertMessage = 'Account Created Successfully!';
+    } else {
+      this.isSuccessful = false;
+      this.alertMessage =
+        'There are errors in the form. Please correct them and try again.';
     }
+    this.showAlert = true;
   }
   confirmPassword() {
     const password = this.signUpForm.get('password')?.value;
     const confirmPassword = this.signUpForm.get('confirmPassword')?.value;
 
     if (password !== confirmPassword) {
-      this.signUpForm.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      this.signUpForm
+        .get('confirmPassword')
+        ?.setErrors({ passwordMismatch: true });
     } else {
       this.signUpForm.get('confirmPassword')?.setErrors(null);
     }
@@ -62,7 +77,6 @@ export class SignUpComponent implements OnInit {
 
     return null;
   }
-
   passwordValidator(control: any) {
     const value = control.value;
     if (!value) {
@@ -70,7 +84,9 @@ export class SignUpComponent implements OnInit {
     }
 
     if (value.length < 8) {
-      return { passwordInvalid: 'Password must be at least 8 characters long.' };
+      return {
+        passwordInvalid: 'Password must be at least 8 characters long.',
+      };
     }
 
     const hasUpperCase = /[A-Z]/.test(value);
@@ -79,9 +95,26 @@ export class SignUpComponent implements OnInit {
     const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value);
 
     if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
-      return { passwordInvalid: 'Password must contain at least one uppercase letter, lowercase letter, number, and special character.' };
+      return {
+        passwordInvalid:
+          'Password must contain at least one uppercase letter, lowercase letter, number, and special character.',
+      };
     }
 
     return null;
+  }
+  getClass(controlName: string) {
+    const control = this.signUpForm.get(controlName);
+    if (control?.touched) {
+      return control.valid ? 'is-valid' : 'is-invalid';
+    }
+    return '';
+  }
+  getMessage(controlName: string): string {
+    if (controlName === 'confirmPassword') {
+      return 'Matches Passord';
+    } else {
+      return 'Looks Good';
+    }
   }
 }
