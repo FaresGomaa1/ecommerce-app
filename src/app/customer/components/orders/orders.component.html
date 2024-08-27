@@ -1,1 +1,70 @@
-<p>orders works!</p>
+<div class="container mt-4">
+  <h2 class="mb-4">Customer'name Orders</h2>
+
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    
+    <!-- Pending Orders Accordion -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#flush-collapsePending" aria-expanded="false" aria-controls="flush-collapsePending">
+          Pending Orders
+        </button>
+      </h2>
+      <div id="flush-collapsePending" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <div *ngFor="let order of pendingOrders" class="order-card">
+            <div class="order-header">
+              <h4>Invoice #{{ order.invoiceNumber }}</h4>
+              <span class="badge badge-info">{{ order.date | date }}</span>
+            </div>
+            <button class="btn btn-primary" (click)="viewDetails(order)">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivered Orders Accordion -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#flush-collapseDelivered" aria-expanded="false" aria-controls="flush-collapseDelivered">
+          Delivered Orders
+        </button>
+      </h2>
+      <div id="flush-collapseDelivered" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <div *ngFor="let order of deliveredOrders" class="order-card">
+            <div class="order-header">
+              <h4>Invoice #{{ order.invoiceNumber }}</h4>
+              <span class="badge badge-success">{{ order.date | date }}</span>
+            </div>
+            <button class="btn btn-primary" (click)="viewDetails(order)">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rejected Orders Accordion -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#flush-collapseRejected" aria-expanded="false" aria-controls="flush-collapseRejected">
+          Rejected Orders
+        </button>
+      </h2>
+      <div id="flush-collapseRejected" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          <div *ngFor="let order of rejectedOrders" class="order-card">
+            <div class="order-header">
+              <h4>Invoice #{{ order.invoiceNumber }}</h4>
+              <span class="badge badge-danger">{{ order.date | date }}</span>
+            </div>
+            <button class="btn btn-primary" (click)="viewDetails(order)">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

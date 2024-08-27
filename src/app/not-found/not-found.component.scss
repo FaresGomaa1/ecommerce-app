@@ -1,0 +1,126 @@
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+/* Container Styling */
+.not-found-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 404 Text Styling */
+h1 {
+  font-size: 10rem;
+  font-weight: bold;
+  color: #343a40;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Description and Button Styling */
+.lead, .description {
+  font-size: 1.5rem;
+  color: #6c757d;
+  animation: slideIn 1.2s ease-in-out;
+}
+
+.btn {
+  animation: bounceIn 1.4s ease-in-out;
+}
+
+/* Animated Icons Styling */
+.animated-icons {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;  /* Center the icons horizontally */
+  gap: 2rem;
+
+  i {
+    font-size: 2.5rem;
+    color: #007bff;
+  }
+
+  .bounce {
+    animation: bounce 2s infinite;
+  }
+
+  .wobble {
+    animation: wobble 2s infinite;
+  }
+
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes wobble {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

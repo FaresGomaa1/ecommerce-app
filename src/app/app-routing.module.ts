@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 
 const routes: Routes = [
@@ -16,10 +18,8 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
-  {
-    path: '**',
-    redirectTo: ''
-  }
+  { path: 'server-error', component: ServerErrorComponent},
+  { path: '**', component: NotFoundComponent},
 ];
 
 @NgModule({

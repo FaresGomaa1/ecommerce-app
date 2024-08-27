@@ -1,0 +1,82 @@
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <select id="country" class="form-select" formControlName="country">
+          <option value="" disabled>Select Country</option>
+          <option value="USA">United States</option>
+          <option value="CAN">Canada</option>
+          <option value="EGY">Egypt</option>
+          <option value="GBR">United Kingdom</option>
+          <!-- Add more countries as needed -->
+        </select>
+        <div
+          *ngIf="
+            addressForm.get('country')!.invalid && addressForm.get('country')!.touched
+          "
+          class="text-danger"
+        >
+          Country is required.
+        </div>
+      </div>
+    <div class="mb-3">
+      <label for="addressLine1" class="form-label">Address Line</label>
+      <input
+        type="text"
+        id="addressLine1"
+        class="form-control"
+        formControlName="addressLine1"
+      />
+      <div
+        *ngIf="
+          addressForm.get('addressLine1')!.invalid &&
+          addressForm.get('addressLine1')!.touched
+        "
+        class="text-danger"
+      >
+        Address Line is required.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <input type="text" id="city" class="form-control" formControlName="city" />
+      <div
+        *ngIf="addressForm.get('city')!.invalid && addressForm.get('city')!.touched"
+        class="text-danger"
+      >
+        City is required.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="state" class="form-label">State</label>
+      <input
+        type="text"
+        id="state"
+        class="form-control"
+        formControlName="state"
+      />
+      <div
+        *ngIf="
+          addressForm.get('state')!.invalid && addressForm.get('state')!.touched
+        "
+        class="text-danger"
+      >
+        State is required.
+      </div>
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Close
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="addressForm.invalid"
+      >
+        Save Address
+      </button>
+    </div>
+  </form>
+  

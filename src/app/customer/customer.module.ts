@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerComponent } from './customer.component';
@@ -13,6 +13,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { StatusColorDirective } from './directives/status-color.directive';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { GetAddressComponent } from './components/checkout/get-address/get-address.component';
 
 
 @NgModule({
@@ -26,11 +29,15 @@ import { StatusColorDirective } from './directives/status-color.directive';
     WishListComponent,
     OrdersComponent,
     StatusColorDirective,
+    ProductDetailsComponent,
+    CheckoutComponent,
+    GetAddressComponent,
   ],
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class CustomerModule { }

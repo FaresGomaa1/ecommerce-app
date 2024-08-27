@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 55vh; /* Makes sure the container takes at least the full viewport height */
+  }
+  
+  router-outlet {
+    flex: 1; /* This allows the router outlet to grow and fill the remaining space */
+  }
+  
+  app-footer {
+    margin-top: auto; /* Pushes the footer to the bottom if there is not enough content */
+  }
+  

@@ -1,0 +1,94 @@
+.product-details {
+    .product-name {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+  
+    .rating-stock-status {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+  
+      .rating {
+        i {
+          color: #FFD700;
+          font-size: 1.5rem;
+          margin-right: 0.25rem;
+        }
+      }
+  
+      .stock-status {
+        margin-left: auto;
+        font-size: 1rem;
+        font-weight: bold;
+  
+        &.in-stock {
+          color: green;
+        }
+  
+        &.out-of-stock {
+          color: red;
+        }
+  
+        &.last-piece {
+          color: orange;
+        }
+      }
+    }
+  
+    .product-description {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .actions {
+      button {
+        margin-right: 0.5rem;
+      }
+  
+      .btn-primary {
+        background-color: #007bff;
+        border: none;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+  
+      .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+  
+        &:hover {
+          background-color: #5a6268;
+        }
+      }
+    }
+  
+    .customer-rating {
+      margin-top: 2rem;
+  
+      p {
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+  
+      .rating-input {
+        i {
+          color: #FFD700;
+          font-size: 1.5rem;
+          cursor: pointer;
+  
+          &:hover,
+          &.selected {
+            color: #FF4500;
+          }
+        }
+      }
+    }
+  }
+  img{
+    height: 296px;
+  }
+  
