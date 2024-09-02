@@ -10,6 +10,10 @@ const routes: Routes = [
     loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
   },
   {
+    path: 'customer',
+    loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule)
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
   },
@@ -17,10 +21,10 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
-  { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
-  { path: 'server-error', component: ServerErrorComponent},
-  { path: '**', component: NotFoundComponent},
+  { path: 'server-error', component: ServerErrorComponent },
+  { path: '**', component: NotFoundComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

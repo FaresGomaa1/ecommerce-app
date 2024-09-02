@@ -15,7 +15,7 @@
 </div>
 <form
   class="row g-4 p-4 shadow rounded bg-light"
-  [formGroup]="signIpForm"
+  [formGroup]="signInForm"
   (ngSubmit)="onSubmit()"
 >
   <!-- User Name -->
@@ -30,12 +30,12 @@
     />
     <div
       *ngIf="
-        signIpForm.get('username')?.touched &&
-        signIpForm.get('username')?.invalid
+        signInForm.get('username')?.touched &&
+        signInForm.get('username')?.invalid
       "
       class="text-danger mt-1"
     >
-      <small *ngIf="signIpForm.get('username')?.errors?.['required']">
+      <small *ngIf="signInForm.get('username')?.errors?.['required']">
         User Name is required.
       </small>
     </div>
@@ -53,12 +53,12 @@
     />
     <div
       *ngIf="
-        signIpForm.get('password')?.touched &&
-        signIpForm.get('password')?.invalid
+        signInForm.get('password')?.touched &&
+        signInForm.get('password')?.invalid
       "
       class="text-danger mt-1"
     >
-      <small *ngIf="signIpForm.get('password')?.errors?.['required']">
+      <small *ngIf="signInForm.get('password')?.errors?.['required']">
         Password is required.
       </small>
     </div>
@@ -69,7 +69,7 @@
     <button
       type="submit"
       class="btn btn-primary px-5"
-      [disabled]="signIpForm.invalid"
+      [disabled]="signInForm.invalid"
     >
       Sign In
     </button>

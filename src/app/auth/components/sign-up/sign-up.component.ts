@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router'; 
+import { UserService } from 'src/app/Shared/Services/user.service';
+import { Register } from 'src/app/Shared/Models/User';
+import { IRegister } from 'src/app/Shared/Interfaces/iuser';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,6 +14,7 @@ export class SignUpComponent implements OnInit {
   signUpForm!: FormGroup;
   showAlert: boolean = false;
   isSuccessful: boolean = false;
+  backendErrors: any[] = [];
   alertMessage: string = '';
   countries = [
     { name: 'USA', code: 'US' },
@@ -17,7 +22,7 @@ export class SignUpComponent implements OnInit {
     { name: 'India', code: 'IN' },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private userService: UserService,private router: Router) {}
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -30,24 +35,42 @@ export class SignUpComponent implements OnInit {
         '',
         [Validators.required, Validators.minLength(8), this.passwordValidator],
       ],
-      confirmPassword: ['', Validators.required],
-      country: ['', Validators.required],
-      streetAddress: [''],
-      city: [''],
+      confirmPassword: ['', Validators.required]
     });
   }
 
+
   onSubmit(): void {
     if (this.signUpForm.valid) {
-      console.log('Form Submitted', this.signUpForm.value);
-      this.isSuccessful = true;
-      this.alertMessage = 'Account Created Successfully!';
+      let newUser: IRegister = new Register(
+        this.signUpForm.value.password,
+        this.signUpForm.value.username,
+        this.signUpForm.value.firstName,
+        this.signUpForm.value.lastName,
+        this.signUpForm.value.phone,
+        this.signUpForm.value.email
+      );
+  
+      this.userService.register(newUser).subscribe(
+        response => {
+          this.router.navigate(['/auth/sign-in']);
+        },
+        error => {
+          console.log(error)
+          if (error.status === 400) {
+            this.backendErrors.push(error.error.errors.Username[0]);
+          } else {
+            this.router.navigate(['/server-error']);
+          }
+          this.isSuccessful = false;
+          this.showAlert = true;
+        }
+      );
     } else {
       this.isSuccessful = false;
-      this.alertMessage =
-        'There are errors in the form. Please correct them and try again.';
+      this.alertMessage = 'There are errors in the form. Please correct them and try again.';
+      this.showAlert = true;
     }
-    this.showAlert = true;
   }
   confirmPassword() {
     const password = this.signUpForm.get('password')?.value;
