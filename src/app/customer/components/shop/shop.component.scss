@@ -3,52 +3,60 @@
 }
 
 .sidebar {
-  padding-left: 40px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  padding-left: 3%;
+
   .position-sticky {
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: 20px;
   }
 
   .sidebar-title {
-    font-weight: 600;
-    margin-bottom: 1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #343a40;
   }
 
   .nav-item {
-    margin-bottom: 0.5rem;
+    margin-bottom: 10px;
 
     .form-check {
-      margin-bottom: 0.5rem;
+      margin-bottom: 10px;
     }
 
     .form-check-input {
-      margin-right: 0.5rem;
+      margin-right: 8px;
     }
 
     .form-check-label {
       font-size: 14px;
+      color: #495057;
     }
   }
 
   .btn {
     width: 100%;
-    padding: 10px;
     font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
   }
 }
 
 main {
   .input-group {
     max-width: 500px;
-
     .form-control {
       border-radius: 0.25rem;
-      border: 1px solid #ced4da;
     }
-
     .btn-outline-secondary {
-      border-radius: 0 0.25rem 0.25rem 0;
       background-color: #f8f9fa;
       border-color: #ced4da;
     }
@@ -58,62 +66,55 @@ main {
     .dropdown-toggle {
       border-radius: 0.25rem;
     }
-
     .dropdown-menu {
       border-radius: 0.25rem;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
-
-    .dropdown-item {
-      &:hover {
-        background-color: #e9ecef;
-      }
+    .dropdown-item:hover {
+      background-color: #e9ecef;
     }
   }
 
   .product-card {
     transition: transform 0.2s, box-shadow 0.2s;
-
+    border: none;
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     .card-img-top {
-      height: 200px;
+      cursor: pointer;
+      height: 220px;
       object-fit: cover;
+      border-radius: 0.25rem;
     }
 
     .card-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
       .card-title {
         font-size: 16px;
         font-weight: 600;
       }
-
       .card-text {
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 700;
         color: #007bff;
       }
-
       .rating {
         .checked {
           color: #ffc107;
         }
-
         .fa-star {
-          font-size: 14px;
+          font-size: 16px;
         }
       }
-
-      .btn {
-        width: 30%;
-        padding: 6px;
-        font-size: 14px;
+      .wishlist-btn {
+        border: 1px solid #007bff;
+        color: #007bff;
+        &:hover {
+          background-color: #007bff;
+          color: #fff;
+        }
       }
     }
   }
@@ -123,14 +124,19 @@ main {
   .sidebar {
     display: none;
   }
-
   main {
     margin-left: 0 !important;
   }
 }
+.snack-success {
+  background-color: #4caf50; 
+  color: #fff;
+}
 
-@media (min-width: 768px) {
-  .sidebar {
-    display: block;
-  }
+.snack-error {
+  background-color: #f44336;
+  color: #fff;
+}
+.snack-bar-action {
+  color: #fff;
 }

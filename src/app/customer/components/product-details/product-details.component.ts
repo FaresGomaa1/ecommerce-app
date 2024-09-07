@@ -1,41 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IProductDetails } from 'src/app/Shared/Interfaces/iproduct';
+import { ProductService } from 'src/app/Shared/Services/product.service';
+import { WishListHelperService } from 'src/app/Shared/Services/wish-list-helper.service';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent {
+export class ProductDetailsComponent implements OnInit {
   stars: number[] = [1, 2, 3, 4, 5];
-  stockStatus: string = 'In Stock'; // Possible values: 'In Stock', 'Out of Stock', 'Last Piece'
-  hasRated: boolean = false;
+  product: IProductDetails = {} as IProductDetails
+  productId!: number;
 
-  getStockClass(stockStatus: string) {
-    switch (stockStatus) {
-      case 'In Stock':
-        return 'in-stock';
-      case 'Out of Stock':
-        return 'out-of-stock';
-      case 'Last Piece':
-        return 'last-piece';
-      default:
-        return '';
-    }
-  }
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private wishListHelperService: WishListHelperService
+  ) {}
 
-  addToCart() {
-    // Logic to add the product to the cart
-    console.log('Added to cart');
-  }
 
-  addToWishlist() {
-    // Logic to add the product to the wishlist
-    console.log('Added to wishlist');
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.productId = +id;
+        this.getProduct();
+      }
+    });
   }
-
-  rateProduct(rating: number) {
-    // Logic to submit the rating
-    this.hasRated = true;
-    console.log(`Product rated with ${rating} stars`);
+  getProduct(): void {
+    this.productService.getProduct(this.productId).subscribe({
+      next: (product) => {
+        this.product = product;
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          this.router.navigate(['/not-found']);
+        } else {
+          this.router.navigate(['/server-error']);
+        }
+      }      
+    });
   }
+  getStars(rating: number): number[] {
+    return Array(Math.floor(rating)).fill(0).map((_, i) => i + 1);
+  }
+  addItemToWishList(itemId: number): void {
+    this.wishListHelperService.addItemToWishList(itemId).subscribe({
+      next: () => {},
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+  
 }

@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomerModule } from './customer/customer.module'; 
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ServerErrorComponent } from './server-error/server-error.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    CustomerModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

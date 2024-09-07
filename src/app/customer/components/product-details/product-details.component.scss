@@ -91,4 +91,13 @@
   img{
     height: 296px;
   }
+  .rating-stars {
+    font-size: 24px;
+    color: lightgray;
+    cursor: pointer;
+  }
+  
+  .rating-stars .fa-star.filled {
+    color: gold;
+  }
   

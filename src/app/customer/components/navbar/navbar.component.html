@@ -57,8 +57,38 @@
         </li>
       </ul>
       <div class="d-flex" role="search">
-        <a class="btn btn-outline-primary" routerLink="/auth/sign-in">Sign In</a>
+        <a 
+          class="btn btn-outline-primary" 
+          *ngIf="!isLoggedIn" 
+          routerLink="/auth/sign-in" 
+          aria-label="Sign In"
+        >
+          Sign In
+        </a>
+        <button 
+          class="btn btn-outline-danger" 
+          *ngIf="isLoggedIn" 
+          type="button"
+          (click)="logOut()" 
+          aria-label="Log Out"
+          id="liveToastBtn"
+        >
+          Log Out
+        </button>
       </div>
     </div>
   </div>
 </nav>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Alert</strong>
+      <small>1 min ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      You Log out succsuflly 
+    </div>
+  </div>
+</div>

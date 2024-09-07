@@ -8,6 +8,7 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { AuthGuard } from '../Shared/Guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -17,11 +18,11 @@ const routes: Routes = [
       { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
       { path: 'landing-page', component: LandingPageComponent },
       { path: 'shop', component: ShopComponent },
-      { path: 'cart', component: CartComponent },
-      { path: 'wish-list', component: WishListComponent },
-      { path: 'product-details', component: ProductDetailsComponent },
-      { path: 'checkout', component: CheckoutComponent },
-      { path: 'order', component: OrdersComponent },
+      { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+      { path: 'wish-list', component: WishListComponent, canActivate: [AuthGuard] },
+      { path: 'product-details/:id', component: ProductDetailsComponent },
+      { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+      { path: 'order', component: OrdersComponent,  canActivate: [AuthGuard] },
     ],
   },
 ];

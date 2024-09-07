@@ -56,7 +56,7 @@ export class SignInComponent implements OnInit {
         const token = response.token;
         
         // Save the token in localStorage
-        localStorage.setItem('authToken', token);
+       this.userService.setToken(token);
 
         
         // Optionally, display a success message
