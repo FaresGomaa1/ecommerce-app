@@ -1,62 +1,162 @@
-.container-fluid {
-  padding: 3%;
+.container {
+  padding: 3rem;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef); // Gradient background
+  border-radius: 1rem; // More rounded corners
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); // Enhanced shadow
 }
 
-.table {
-  margin-bottom: 0;
+h2 {
+  font-size: 3rem; // Larger font size for the heading
+  font-weight: 700;
+  color: #007bff; // Primary color for the heading
+  margin-bottom: 2rem; // Increased bottom margin
+  text-transform: uppercase; // Uppercase text for emphasis
+  letter-spacing: 0.1em; // More letter spacing
+  position: relative; // For underline effect
 
-  .wishlist-table {
-    th {
-      background-color: #f8f9fa;
-      font-weight: 600;
+  &::after {
+    content: '';
+    display: block;
+    width: 50%;
+    height: 2px;
+    background: #007bff;
+    position: absolute;
+    bottom: -10px;
+    left: 25%;
+  }
+}
+
+.wishlist-card {
+  border-radius: 1rem; // More rounded corners
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); // Deep shadow
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  position: relative; // For overlay effect
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, rgba(255, 193, 7, 0.8), rgba(255, 193, 7, 0));
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-10px); // More lift on hover
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25); // Deeper shadow on hover
+    background-color: #f1f3f5; // Background color change on hover
+  }
+
+  .card-img-top {
+    height: 250px; // Increased height
+    object-fit: cover;
+    border-bottom: 2px solid #e9ecef; // Thicker border
+    transition: transform 0.3s ease; // Smooth transition
+  }
+
+  &:hover .card-img-top {
+    transform: scale(1.05); // Zoom effect on image hover
+  }
+
+  .card-body {
+    padding: 2rem;
+    position: relative; // For overlay effect
+
+    .card-title {
+      font-size: 1.75rem; // Larger font size
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #212529;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #007bff; // Color change on hover
+      }
     }
 
-    td {
-      vertical-align: middle;
-    }
+    .card-text {
+      font-size: 1.2rem; // Larger font size
+      color: #495057;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
 
-    .badge {
-      font-size: 0.9rem;
-      padding: 0.5em 0.75em;
-      color: #fff !important; // Force text color to be white
-    }
-
-    .badge-success {
-      background-color: #28a745 !important; // Green for In Stock
-    }
-
-    .badge-danger {
-      background-color: #dc3545 !important; // Red for Out of Stock
-    }
-
-    .badge-warning {
-      background-color: #ffc107 !important; // Yellow for Last Piece
+      .badge {
+        font-size: 0.9rem;
+        border-radius: 0.25rem;
+      }
     }
 
     .btn {
-      font-size: 0.9rem;
-      padding: 0.5em 1em;
+      font-size: 1rem;
+      padding: 0.75em 1.5em; // Increased padding
+      border-radius: 0.5rem; // Rounded corners
+      position: relative; // For tooltip
+      transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1); // Enlarge on hover
+        text-decoration: none;
+      }
+
+      &.btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+
+        &:hover {
+          background-color: #0056b3;
+          border-color: #004085;
+        }
+      }
+
+      &.btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+
+        &:hover {
+          background-color: #c82333;
+          border-color: #bd2130;
+        }
+      }
     }
+  }
+
+  .card-footer {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-top: 1px solid #e9ecef;
   }
 }
 
 @media (max-width: 767px) {
-  .table {
-    font-size: 0.85rem;
+  .container {
+    padding: 1.5rem;
+  }
 
-    .btn {
-      font-size: 0.8rem;
-      padding: 0.4em 0.8em;
-    }
+  .card-img-top {
+    height: 200px; // Adjusted height for smaller screens
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.5em 1em;
   }
 }
 
 @media (min-width: 768px) {
-  .table {
-    .wishlist-table {
-      .btn {
-        width: auto;
-      }
-    }
+  .container {
+    padding: 4rem; // Increased padding for larger screens
+  }
+
+  .card-img-top {
+    height: 280px; // Increased height for larger screens
   }
 }

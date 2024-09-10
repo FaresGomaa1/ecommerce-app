@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { IProduct } from 'src/app/Shared/Interfaces/iproduct';
 import { CategoryService } from 'src/app/Shared/Services/category.service';
 import { ProductService } from 'src/app/Shared/Services/product.service';
-import { WishListHelperService } from 'src/app/Shared/Services/wish-list-helper.service';
 
 @Component({
   selector: 'app-shop',
@@ -32,7 +31,6 @@ isSuccess: boolean = true;
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
-    private wishListHelperService: WishListHelperService,
   ) {}
 
   ngOnInit(): void {
@@ -119,11 +117,5 @@ isSuccess: boolean = true;
     this.productService.viewDetails(productId);
   }
   addItemToWishList(itemId: number): void {
-    this.wishListHelperService.addItemToWishList(itemId).subscribe({
-      next: () => {},
-      error: (error) => {
-        console.log(error);
-      },
-    });
   }
 }

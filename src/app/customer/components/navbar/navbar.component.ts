@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
 
   private checkLoginStatus(): void {
     const token = this.userService.getToken();
-    this.isLoggedIn = this.userService.validateToken(token);
+    this.isLoggedIn = this.userService.validateToken();
   }
 
   logOut(): void {

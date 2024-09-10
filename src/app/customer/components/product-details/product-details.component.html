@@ -1,44 +1,92 @@
 <div class="container product-details">
-    <div class="row">
-      <!-- Image Slider -->
-      <div class="col-md-6">
-        <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item" *ngFor="let photo of product?.photos; let i = index" [ngClass]="{'active': i === 0}">
-              <img [src]="'../../../../assets/products/' + photo" class="d-block w-100" [alt]="'Image of ' + product.name">
-            </div>
+  <div class="row">
+    <!-- Image Slider -->
+    <div class="col-md-6">
+      <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let photo of product?.photos; let i = index" [ngClass]="{'active': i === 0}">
+            <img [src]="'../../../../assets/products/' + photo" class="d-block w-100" [alt]="'Image of ' + product.name">
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="col-md-6">
+      <h1 class="product-name">{{ product.name }}</h1>
+      <div class="rating-stock-status">
+        <div class="rating">
+          <i class="fas fa-star" *ngFor="let star of getStars(product.averageRating || 0)"></i>
         </div>
       </div>
-  
-      <!-- Product Info -->
-      <div class="col-md-6">
-        <h1 class="product-name">{{ product.name }}</h1>
-        <div class="rating-stock-status">
-          <div class="rating">
-            <i class="fas fa-star" *ngFor="let star of getStars(product.averageRating)"></i>
-          </div>          
-        </div>
-        <p class="product-description">
-          {{ product.description }}
-        </p>
-        <div class="actions">
-          <button class="btn btn-primary">
-            <i class="fas fa-shopping-cart"></i> Add to Cart
-          </button>
-          <button class="btn btn-secondary"(click)="addItemToWishList(product.id)">
-            <i class="fas fa-heart"></i> Add to Wishlist
-          </button>
-        </div>
-        <!-- <div class="customer-rating" *ngIf="!product.isRatedByUser && isLogged">
+      <p class="product-description">{{ product.description }}</p>
+
+<!-- Color and Size Selection -->
+<div class="color-size-selection">
+  <div class="form-group">
+    <label for="colorSelect">Select Color:</label>
+    <select id="colorSelect" class="form-control" [(ngModel)]="selectedColorId" (change)="onColorChange()">
+      <!-- Default option -->
+      <option [value]="null" >Select Color</option>
+    
+      <!-- Loop through available colors -->
+      <option *ngFor="let colorId of availableColorIds" [value]="colorId">
+        {{ getColorName(colorId) }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group" *ngIf="availableSizeIds.size > 0">
+    <label for="sizeSelect">Select Size:</label>
+    <select id="sizeSelect" class="form-control" [(ngModel)]="selectedSizeId" (change)="onSizeChange()">
+      <option [value]="null">Select Size</option>
+      <option *ngFor="let sizeId of availableSizeIds" [value]="sizeId">
+        {{ getSizeName(sizeId) }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="quantitySelect">Select Quantity:</label>
+    <input id="quantitySelect" type="number" class="form-control"
+      [(ngModel)]="selectedQuantity"
+      [attr.max]="availableQuantity"
+      min="1">
+  </div>
+
+  <div class="stock-status">
+    <span [ngClass]="{
+      'last-piece': availableQuantity === 1, 
+      'out-of-stock': availableQuantity === 0, 
+      'in-stock': availableQuantity > 1
+    }">
+      {{ availableQuantity > 0 ? availableQuantity + ' pieces left' : 'Out of stock' }}
+    </span>
+  </div>
+</div>
+      <div class="actions">
+        <button class="btn btn-primary" [disabled]="!isDataValid()" (click)="addToCart()">
+          <i class="fas fa-shopping-cart"></i> Add to Cart
+        </button>
+        <button class="btn btn-secondary" (click)="addItemToWishList(product.id)" 
+        *ngIf="!isItemExist"
+        >
+          <i class="fas fa-heart"></i> Add to Wishlist
+        </button>
+        <button class="btn btn-danger" (click)="removeFromWishList(product.id)" 
+        *ngIf="isItemExist"
+        > Remove from Wish List
+        </button>
+      </div>
+                <!-- <div class="customer-rating" *ngIf="!product.isRatedByUser && isLogged">
           <p>Rate this product:</p>
           <div class="rating-stars">
             <i class="fas fa-star"
@@ -51,7 +99,7 @@
         <div class="customer-rating" *ngIf="!isLogged">
           <p>To rate {{product.name}} you need to sign in first</p>
         </div> -->
-      </div>
     </div>
   </div>
+</div>
   

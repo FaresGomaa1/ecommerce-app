@@ -22,12 +22,12 @@ export class UserService {
   login(credentials: ILogin): Observable<any> {
     return this.http.post<any>(this.baseUrl + 'login', credentials);
   }
-  validateToken(token: string | null): boolean {
+  validateToken(): boolean {
+    let token = this.getToken();
     if (!token) {
       return false;
     }
     try {
-      // Check if the token is expired
       return !this.jwtHelper.isTokenExpired(token);
     } catch (error) {
       console.error('Error validating token', error);
@@ -50,9 +50,8 @@ export class UserService {
     if (!token) {
       return null;
     }
-    if (this.validateToken(token)) {
+    if (this.validateToken()) {
       try {
-        // Decode the token if it is valid
         return this.jwtHelper.decodeToken(token);
       } catch (error) {
         console.error('Error decoding token', error);
@@ -63,8 +62,7 @@ export class UserService {
     }
   }
   isAuthenticated(): Observable<boolean> {
-    const token = this.getToken();
-    if (this.validateToken(token)) {
+    if (this.validateToken()) {
       return of(true);
     } else {
       return of(false);

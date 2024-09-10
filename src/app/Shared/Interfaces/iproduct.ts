@@ -10,7 +10,6 @@ export interface IBaseProduct {
 export interface IProduct extends IBaseProduct {
     category: string;
     photoUrl: string;
-    
 }
 
 // Interface for detailed product information
@@ -24,6 +23,8 @@ export interface IProductDetails extends IBaseProduct {
 // Interface for colors, sizes, and quantity
 export interface IColorsAndSizesAndQuantity {
     colorName: string;
+    colorId: number;
     sizeName: string;
+    sizeId:number;
     quantity: number;
 }

@@ -1,59 +1,94 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { catchError, EMPTY, Observable, throwError } from 'rxjs';
 import { IWishList, IWishListGet } from '../Interfaces/iwish-list';
 import { environment } from 'src/environments/environment';
-import { UserService } from './user.service';
+import { SharedService } from './shared.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WishListService {
   private api: string = `${environment.apiUrl}/WishList`;
-  private token: string | null;
-  private decodedToken: any;
-  private userId:string = "";
 
-  constructor(private http: HttpClient, private userService: UserService) {
-    this.token = this.userService.getToken();
-    this.decodedToken = this.userService.decodeToken();
-    this.userId = this.decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private sharedService: SharedService
+  ) {}
+
+  private getHeaders(): HttpHeaders {
+    return this.sharedService.getHeaders();
+  }
+
+  private getUserId(): string {
+    return this.sharedService.getUserIdFromToken();
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    if (error.status === 409 && error.error === 'Item already exists in the wishlist.') {
+      return throwError(() => new Error('Item already exists in the wishlist.'));
+    }
+    return this.sharedService.handleError(error);
+  }
+
+  addItemToWishList(itemId: number): Observable<IWishList> {
+    if (!this.sharedService.isAuthenticated()) {
+      this.router.navigate(['/auth/sign-in']);
+      return EMPTY;
+    }
+
+    const wishListItem: IWishList = {
+      userId: this.getUserId(),
+      productId: itemId,
+    };
+
+    return this.http.post<IWishList>(this.api, wishListItem, { headers: this.getHeaders() }).pipe(
+      catchError((error: HttpErrorResponse) => this.handleError(error))
+    );
   }
 
   getWishListItems(): Observable<IWishListGet[]> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
-    });
-    const url = `${this.api}?userId=${this.userId}`;
-    return this.http.get<IWishListGet[]>(url, { headers });
-  }
-
-  addItemToWishList(item: IWishList): Observable<IWishList> {
-    item.userId = this.userId;
-    if (!this.token) {
-      throw new Error('No token available');
-    }
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<IWishList>(`${this.api}`, item, { headers });
+    const url = `${this.api}?userId=${this.getUserId()}`;
+    return this.http.get<IWishListGet[]>(url, { headers: this.getHeaders() });
   }
 
   deleteWishListItem(itemId: number): Observable<void> {
-
-    if (!this.token) {
-      throw new Error('No token available');
+    if (!this.sharedService.isAuthenticated()) {
+      this.router.navigate(['/auth/sign-in']);
+      return EMPTY;
     }
 
-    // Set up headers with Bearer token
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
-    });
+    const url = `${this.api}/${itemId}?userId=${this.getUserId()}`;
+    return this.http.delete<void>(url, { headers: this.getHeaders() }).pipe(
+      catchError((error: HttpErrorResponse) => this.handleError(error))
+    );
+  }
 
-    // Make DELETE request to remove the item from wishlist
-    const url = `${this.api}/${itemId}?userId=${this.userId}`;
-    return this.http.delete<void>(url, { headers });
+  checkIfItemExists(itemId: number): Observable<boolean> {
+    if (!this.sharedService.isAuthenticated()) {
+      this.router.navigate(['/auth/sign-in']);
+      return EMPTY;
+    }
+
+    const url = `${this.api}/check-exists?productId=${itemId}&userId=${this.getUserId()}`;
+    return this.http.get<boolean>(url, { headers: this.getHeaders() });
+  }
+
+  deleteByUserIdProductId(itemId: number): Observable<void> {
+    if (!this.sharedService.isAuthenticated()) {
+      this.router.navigate(['/auth/sign-in']);
+      return EMPTY;
+    }
+
+    const url = `${this.api}?productId=${itemId}&userId=${this.getUserId()}`;
+    return this.http.delete<void>(url, { headers: this.getHeaders() }).pipe(
+      catchError((error: HttpErrorResponse) => this.handleError(error))
+    );
   }
 }
