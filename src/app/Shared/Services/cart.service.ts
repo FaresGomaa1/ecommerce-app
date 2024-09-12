@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ICartAdd } from '../Interfaces/icart';
+import { ICart, ICartAdd } from '../Interfaces/icart';
 import { catchError, EMPTY, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { SharedService } from './shared.service';
@@ -24,6 +24,7 @@ export class CartService {
       this.router.navigate(['/auth/sign-in']);
       return EMPTY;
     }
+
     const headers = this.sharedService.getHeaders();
     item.userId = this.sharedService.getUserIdFromToken();
 
@@ -31,4 +32,29 @@ export class CartService {
       catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
     );
   }
+
+  // Get cart items
+  getCartItems(): Observable<ICart[]> {
+    if (!this.sharedService.isAuthenticated()) {
+      this.router.navigate(['/auth/sign-in']);
+      return EMPTY;
+    }
+
+    const headers = this.sharedService.getHeaders();
+    const url: string = `${this.api}?userId=${this.sharedService.getUserIdFromToken()}`;
+
+    return this.http.get<ICart[]>(url, { headers })
+  }
+  deleteItem(itemId: number): Observable<void> {
+    const headers = this.sharedService.getHeaders();
+    return this.http.delete<void>(`${this.api}/${itemId}`, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
+    );
+  }
+  updateItemQuantity(quantity: number, itemId: number) {
+    const headers = this.sharedService.getHeaders();
+    return this.http.patch(`${this.api}?quantity=${quantity}&itemId=${itemId}`, null, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
+    );
+  }  
 }

@@ -37,7 +37,6 @@ export class SharedService {
 
   // Error handling
   handleError(error: HttpErrorResponse): Observable<never> {
-    console.log(error)
     switch (error.status) {
       case 400:
         return throwError(() => new Error(error.error.message));
@@ -45,6 +44,8 @@ export class SharedService {
         this.router.navigate(['/not-found']);
         return EMPTY;
       default:
+        console.log(this. getUserIdFromToken());
+        console.log(error)
         this.router.navigate(['/server-error']);
         return EMPTY;
     }
