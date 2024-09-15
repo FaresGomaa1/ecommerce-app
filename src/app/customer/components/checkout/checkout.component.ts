@@ -1,21 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-interface OrderItem {
-  productName: string;
-  price: number;
-  quantity: number;
-  total: number;
-}
-
-interface Address {
-  id: number;
-  fullName: string;
-  addressLine1: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
+import { IAddress } from 'src/app/Shared/Interfaces/iaddress';
+import { ICart } from 'src/app/Shared/Interfaces/icart';
+import { AddressService } from 'src/app/Shared/Services/address.service';
+import { CartService } from 'src/app/Shared/Services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -23,41 +10,50 @@ interface Address {
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+  orderItems: ICart[] = [];
+  modifiedArray: { item: ICart, total: number }[] = [];
+  orderTotal: number = 0;
+  shippingAddresses: IAddress[] = [];
+  selectedAddress: IAddress | null = null;
 
-  orderItems: OrderItem[] = [
-    { productName: 'Product 1', price: 29.99, quantity: 2, total: 59.98 },
-    { productName: 'Product 2', price: 19.99, quantity: 1, total: 19.99 },
-    // Add more items here
-  ];
-
-  shippingAddresses: Address[] = [
-    { id: 1, fullName: 'John Doe', addressLine1: '123 Main St', city: 'Springfield', state: 'IL', zipCode: '62701', country: 'USA' },
-    { id: 2, fullName: 'Jane Smith', addressLine1: '456 Oak St', city: 'Hometown', state: 'CA', zipCode: '90210', country: 'USA' },
-    // Add more addresses here
-  ];
-
-  selectedAddress: Address | null = null;
-
-  get orderTotal(): number {
-    return this.orderItems.reduce((total, item) => total + item.total, 0);
-  }
+  constructor(
+    private cartService: CartService,
+    private addressService: AddressService
+  ) {}
 
   ngOnInit(): void {
-    // Initialize default selected address if any
-    this.selectedAddress = this.shippingAddresses.length ? this.shippingAddresses[0] : null;
+    this.getCartItems();
+    this.getUserAddress();
   }
 
-  viewDetails(item: OrderItem) {
-    // Implement view details functionality
-    console.log('View details for:', item);
+  getCartItems(): void {
+    this.cartService.getCartItems().subscribe((items) => {
+      this.orderItems = items;
+      this.populateModifiedArray();
+    });
   }
 
-  placeOrder() {
+  populateModifiedArray(): void {
+    this.modifiedArray = [];
+    this.orderTotal = 0;
+
+    this.orderItems.forEach(item => {
+      const total = item.productPrice * item.quantity;
+      this.orderTotal += total;
+      this.modifiedArray.push({ item, total });
+    });
+  }
+
+  getUserAddress(): void {
+    this.addressService.getUserAddress().subscribe((addresses) => {
+      this.shippingAddresses = addresses;
+    });
+  }
+
+  placeOrder(): void {
     if (this.selectedAddress) {
-      // Implement place order functionality
-      console.log('Order placed with address:', this.selectedAddress);
-    } else {
-      console.log('Please select a shipping address.');
+      // Place the order using selected address and order items logic
+      console.log('Order placed successfully');
     }
   }
 }

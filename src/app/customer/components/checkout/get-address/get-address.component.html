@@ -19,17 +19,17 @@
         </div>
       </div>
     <div class="mb-3">
-      <label for="addressLine1" class="form-label">Address Line</label>
+      <label for="addressLine" class="form-label">Address Line</label>
       <input
         type="text"
-        id="addressLine1"
+        id="addressLine"
         class="form-control"
-        formControlName="addressLine1"
+        formControlName="addressLine"
       />
       <div
         *ngIf="
-          addressForm.get('addressLine1')!.invalid &&
-          addressForm.get('addressLine1')!.touched
+          addressForm.get('addressLine')!.invalid &&
+          addressForm.get('addressLine')!.touched
         "
         class="text-danger"
       >
@@ -74,6 +74,7 @@
         type="submit"
         class="btn btn-primary"
         [disabled]="addressForm.invalid"
+        data-bs-dismiss="modal"
       >
         Save Address
       </button>
