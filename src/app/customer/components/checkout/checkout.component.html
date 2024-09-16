@@ -51,7 +51,9 @@
 
   <!-- Place Order Button -->
   <div class="place-order">
-    <button class="btn btn-success btn-lg" [disabled]="!selectedAddress">
+    <button class="btn btn-success btn-lg" [disabled]="!selectedAddress"
+    (click)="placeOrder()"
+    >
       <i class="fas fa-check-circle"></i> Place Order
     </button>
   </div>
