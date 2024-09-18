@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ICart, ICartAdd } from '../Interfaces/icart';
-import { catchError, EMPTY, Observable } from 'rxjs';
+import { catchError, EMPTY, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { SharedService } from './shared.service';
 
@@ -11,6 +11,7 @@ import { SharedService } from './shared.service';
 })
 export class CartService {
   private api: string = `${environment.apiUrl}/Cart`;
+  cartItem:number = 0;
 
   constructor(
     private http: HttpClient,
@@ -66,6 +67,14 @@ export class CartService {
     const url:string = `${this.api}/user/${this.sharedService.getUserIdFromToken()}`
     return this.http.delete<void>(url, { headers }).pipe(
       catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
+    );
+  }
+  getCartLength(): Observable<number> {
+    const headers = this.sharedService.getHeaders();
+    const url: string = `${this.api}?userId=${this.sharedService.getUserIdFromToken()}`;
+  
+    return this.http.get<ICart[]>(url, { headers }).pipe(
+      map(cartItems => cartItems.length)
     );
   }
 }

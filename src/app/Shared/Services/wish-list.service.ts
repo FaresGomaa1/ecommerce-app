@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, Observable, throwError } from 'rxjs';
+import { catchError, EMPTY, map, Observable, throwError } from 'rxjs';
 import { IWishList, IWishListGet } from '../Interfaces/iwish-list';
 import { environment } from 'src/environments/environment';
 import { SharedService } from './shared.service';
@@ -89,6 +89,14 @@ export class WishListService {
     const url = `${this.api}?productId=${itemId}&userId=${this.getUserId()}`;
     return this.http.delete<void>(url, { headers: this.getHeaders() }).pipe(
       catchError((error: HttpErrorResponse) => this.handleError(error))
+    );
+  }
+  getWishListLength(): Observable<number> {
+    const headers = this.sharedService.getHeaders();
+    const url = `${this.api}?userId=${this.getUserId()}`;
+  
+    return this.http.get<IWishListGet[]>(url, { headers }).pipe(
+      map(wishListItems => wishListItems.length)
     );
   }
 }

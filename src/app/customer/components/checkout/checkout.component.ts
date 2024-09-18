@@ -71,13 +71,14 @@ export class CheckoutComponent implements OnInit {
     };
   
     // Call the addOrder method and handle the response
+    console.log(newOrder);
     this.orderService.addOrder(newOrder).subscribe({
       next: (order) => {
         console.log('Order successfully created with ID:', order.id);
         this.addOrderDetails(order.id);
       },
       error: (error) => {
-        console.error('Failed to place the order:', error);
+        console.log(error);
         // Optional: Show user feedback, retry logic, etc.
       },
     });

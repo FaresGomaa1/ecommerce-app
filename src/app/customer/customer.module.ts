@@ -18,6 +18,7 @@ import { StatusColorDirective } from './directives/status-color.directive';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { GetAddressComponent } from './components/checkout/get-address/get-address.component';
+import { WishListButtonComponent } from './Shared/wish-list-button/wish-list-button.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { GetAddressComponent } from './components/checkout/get-address/get-addre
     ProductDetailsComponent,
     CheckoutComponent,
     GetAddressComponent,
+    WishListButtonComponent,
   ],
   imports: [
     CommonModule,

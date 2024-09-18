@@ -89,9 +89,7 @@
                   [ngClass]="{'fa-star': product.averageRating > i, 'fa-star-o': product.averageRating <= i, 'checked': product.averageRating > i}">
                 </span>
               </div>
-              <button class="btn btn-outline-primary wishlist-btn mt-2" (click)="addItemToWishList(product.id)" >
-                <i class="fa fa-heart"></i> Add to Wishlist
-              </button>
+              <app-wish-list-button [productId]="product.id"></app-wish-list-button>
             </div>
           </div>
         </div>

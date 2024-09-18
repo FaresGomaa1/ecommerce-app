@@ -50,7 +50,6 @@ export class ProductDetailsComponent implements OnInit {
       next: (product) => {
         this.product = product;
         this.onColorChange();
-        this.checkItemExist(this.product.id);
       },
       error: (err) => {
         console.log(err)
@@ -63,38 +62,10 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
   getStars(rating: number): number[] {
-    const validRating = Math.max(0, Math.floor(rating) || 0);
+    const validRating = Math.max(0, Math.ceil(rating) || 0);
     return Array(validRating).fill(0).map((_, i) => i + 1);
   }
-  addItemToWishList(itemId: number): void {
-    this.wishListService.addItemToWishList(itemId).subscribe({
-      next: () => {
-        this.isItemExist = true;
-        this.snackBar.open('Item added to wishlist', 'Close', {
-          duration: 6000,
-          verticalPosition: 'bottom',
-          panelClass: ['snack-success'],
-        });
-      },
-      error: (error) => {
-        this.isItemExist = false;
-        if (error.message === "This product is already in the user's wishlist.") {
-          this.snackBar.open(error.message, 'Close', {
-            duration: 6000,
-            verticalPosition: 'bottom',
-            panelClass: ['snack-error'],
-          });
-        } else {
-          this.isItemExist = false;
-          this.snackBar.open('An error occurred. Please try again.', 'Close', {
-            duration: 6000,
-            verticalPosition: 'bottom',
-            panelClass: ['snack-error'],
-          });
-        }
-      }
-    });
-  }
+
   onColorChange(): void {
     this.availableColorIds.clear();
     this.product.colorsAndSizesAndQuantity.forEach(item => {
@@ -145,31 +116,6 @@ export class ProductDetailsComponent implements OnInit {
   }
   isDataValid(): boolean {
     return this.availableQuantity >= this.selectedQuantity;
-  }
-  checkItemExist(itemId: number) {
-    if(!this.userService.validateToken()){
-      this.isItemExist = false;
-      return;
-    }
-    this.wishListService.checkIfItemExists(itemId).subscribe({
-      next: (exists: boolean) => {
-        this.isItemExist = exists;
-      },
-      error: (err) => {
-        console.log(err)
-        this.isItemExist =  false;
-      }
-    });
-  }
-  removeFromWishList(itemId: number): void {
-    this.wishListService.deleteByUserIdProductId(itemId).subscribe({
-      next: () => {
-        this.isItemExist = false
-      },
-      error: (error) => {
-        this.checkItemExist(itemId);
-      }
-    });
   }
   addToCart() {
     try {

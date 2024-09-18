@@ -28,7 +28,7 @@ export class SignUpComponent implements OnInit {
     this.signUpForm = this.fb.group({
       firstName: ['', [Validators.required, this.nameValidator]],
       lastName: ['', [Validators.required, this.nameValidator]],
-      username: ['', [Validators.required, this.nameValidator]],
+      username: ['', [Validators.required]],
       phone: [''],
       email: ['', [Validators.email]],
       password: [
@@ -56,15 +56,24 @@ export class SignUpComponent implements OnInit {
           this.router.navigate(['/auth/sign-in']);
         },
         error => {
-          console.log(error)
+          this.backendErrors = [];
           if (error.status === 400) {
-            this.backendErrors.push(error.error.errors.Username[0]);
+            if (error.error.errors.Username) {
+              this.backendErrors.push(error.error.errors.Username[0]);
+            }
+            if (error.error.errors.Email) {
+              this.backendErrors.push(error.error.errors.Email[0]);
+            }
+            if (error.error.errors.Phone) {
+              this.backendErrors.push(error.error.errors.Phone[0]);
+            }
           } else {
             this.router.navigate(['/server-error']);
           }
           this.isSuccessful = false;
           this.showAlert = true;
         }
+        
       );
     } else {
       this.isSuccessful = false;
