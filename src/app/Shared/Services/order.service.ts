@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, Observable, of, throwError } from 'rxjs';
 import { retryWhen, mergeMap, delay, take } from 'rxjs/operators';
-import { IOrderAdd, IOrderResponse } from '../Interfaces/iorder';
+import { IOrder, IOrderAdd, IOrderResponse } from '../Interfaces/iorder';
 import { SharedService } from './shared.service';
 import { environment } from 'src/environments/environment';
 
@@ -95,6 +95,18 @@ export class OrderService {
     const url: string = `${this.baseUrl}/${orderId}?userId=${this.sharedService.getUserIdFromToken()}`;
 
     return this.http.delete<void>(url, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
+    );
+  }
+  getUserOrders():Observable<IOrder[]>{
+    if (!this.sharedService.isAuthenticated()) {
+      this.router.navigate(['/auth/sign-in']);
+      return EMPTY;
+    }
+
+    const headers = this.sharedService.getHeaders();
+    const url = `${this.baseUrl}?userId=${this.sharedService.getUserIdFromToken()}`
+    return this.http.get<IOrder[]>(url, { headers }).pipe(
       catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
     );
   }

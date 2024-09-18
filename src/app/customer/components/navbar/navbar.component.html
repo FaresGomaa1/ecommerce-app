@@ -1,6 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">E-Commerce</a>
+    <a class="navbar-brand" href="#">
+      <!-- <img src="logo.png" alt="E-Commerce" class="logo" /> -->
+      E-Commerce
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,80 +18,69 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a
-            class="nav-link"
-            aria-current="page"
-            routerLink="/landing-page"
-            routerLinkActive="router-link-active"
-            >Home</a
-          >
+          <a class="nav-link" aria-current="page" routerLink="/landing-page" routerLinkActive="active-link">
+            <i class="fas fa-home" title="Home"></i> Home
+          </a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/shop"
-            routerLinkActive="router-link-active"
-            >Shop</a
-          >
+          <a class="nav-link" routerLink="/shop" routerLinkActive="active-link">
+            <i class="fas fa-store" title="Shop"></i> Shop
+          </a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/cart"
-            routerLinkActive="router-link-active"
-            >Cart</a
-          >
+          <a class="nav-link" routerLink="/cart" routerLinkActive="active-link">
+            <i class="fas fa-shopping-cart" title="My Cart"></i>My Cart
+            <span class="badge bg-primary cart-badge">3</span>
+          </a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/wish-list"
-            routerLinkActive="router-link-active"
-            >Wish List</a
-          >
+          <a class="nav-link" routerLink="/wish-list" routerLinkActive="active-link">
+            <i class="fas fa-heart" title="My Wish-List"></i> Wish List
+          </a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/order"
-            routerLinkActive="router-link-active"
-            >My Orders</a
-          >
+          <a class="nav-link" routerLink="/order" routerLinkActive="active-link">
+            <i class="fas fa-box" title="My Orders"></i> Orders
+          </a>
         </li>
       </ul>
-      <div class="d-flex" role="search">
-        <a 
-          class="btn btn-outline-primary" 
-          *ngIf="!isLoggedIn" 
-          routerLink="/auth/sign-in" 
+      <div class="d-flex align-items-center">
+        <a
+          class="btn btn-primary me-2"
+          *ngIf="!isLoggedIn"
+          routerLink="/auth/sign-in"
           aria-label="Sign In"
         >
-          Sign In
+          <i class="fas fa-sign-in-alt"></i> Sign In
         </a>
-        <button 
-          class="btn btn-outline-danger" 
-          *ngIf="isLoggedIn" 
+        <button
+          class="btn btn-outline-danger"
+          *ngIf="isLoggedIn"
           type="button"
-          (click)="logOut()" 
+          (click)="logOut()"
           aria-label="Log Out"
-          id="liveToastBtn"
         >
-          Log Out
+          <i class="fas fa-sign-out-alt"></i> Log Out
         </button>
       </div>
     </div>
   </div>
 </nav>
+
+<!-- Toast for Log out Notification -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Alert</strong>
-      <small>1 min ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      <img src="logo.png" class="rounded me-2" alt="Logo" />
+      <strong class="me-auto">E-Commerce</strong>
+      <small>Just Now</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
     </div>
-    <div class="toast-body">
-      You Log out succsuflly 
-    </div>
+    <div class="toast-body">You have logged out successfully</div>
   </div>
 </div>

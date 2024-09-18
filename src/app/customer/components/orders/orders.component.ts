@@ -1,27 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { IOrder } from 'src/app/Shared/Interfaces/iorder';
+import { OrderService } from 'src/app/Shared/Services/order.service';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  styleUrls: ['./orders.component.scss'],
 })
-export class OrdersComponent {
-  pendingOrders = [
-    { invoiceNumber: 'INV001', date: new Date() },
-    { invoiceNumber: 'INV002', date: new Date() }
-  ];
+export class OrdersComponent implements OnInit {
+  pendingOrders: IOrder[] = [];
+  rejectedOrders: IOrder[] = [];
+  deliveredOrders: IOrder[] = [];
 
-  deliveredOrders = [
-    { invoiceNumber: 'INV003', date: new Date() },
-    { invoiceNumber: 'INV004', date: new Date() }
-  ];
+  constructor(private orderService: OrderService) {}
 
-  rejectedOrders = [
-    { invoiceNumber: 'INV005', date: new Date() },
-    { invoiceNumber: 'INV006', date: new Date() }
-  ];
+  ngOnInit(): void {
+    this.loadOrders();
+  }
 
-  viewDetails(order: any): void {
-    console.log('Viewing details for order:', order);
+  private loadOrders(): void {
+    this.orderService.getUserOrders().subscribe({
+      next: (orders) => this.categorizeOrders(orders),
+      error: (err) => console.error('Failed to load orders', err),
+    });
+  }
+
+  private categorizeOrders(orders: IOrder[]): void {
+    console.log(orders);
+    orders.forEach(order => {
+      switch (order.status) {
+        case 'Pending':
+          this.pendingOrders.push(order);
+          break;
+        case 'Rejected':
+          this.rejectedOrders.push(order);
+          break;
+        case 'Delivered':
+          this.deliveredOrders.push(order);
+          break;
+        default:
+          console.warn(`Unknown order status: ${order.status}`);
+      }
+    });
   }
 }

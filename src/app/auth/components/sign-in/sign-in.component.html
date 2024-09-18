@@ -1,39 +1,51 @@
-<h1>Sign In</h1>
+<h1 class="sign-in-title">Sign In</h1>
+
+<!-- Alert Notification -->
 <div
   *ngIf="showAlert"
   [ngClass]="{
+    'alert': true,
     'alert-success': isSuccessful,
     'alert-danger': !isSuccessful
   }"
-  class="alert"
   role="alert"
 >
   {{ alertMessage }}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
   <div class="spinner-border text-success" *ngIf="isSuccessful" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
+
+<!-- Sign In Form -->
 <form
-  class="row g-4 p-4 shadow rounded bg-light"
+  class="sign-in-form"
   [formGroup]="signInForm"
   (ngSubmit)="onSubmit()"
 >
-  <!-- User Name -->
-  <div class="col-md-6">
-    <label for="username" class="form-label">User Name</label>
+  <!-- User Name Field -->
+  <div class="form-group">
+    <label for="username">User Name</label>
     <input
       type="text"
-      class="form-control"
       id="username"
       formControlName="username"
       placeholder="Enter your username"
+      [ngClass]="{
+        'is-invalid': signInForm.get('username')?.touched && signInForm.get('username')?.invalid
+      }"
     />
     <div
       *ngIf="
         signInForm.get('username')?.touched &&
         signInForm.get('username')?.invalid
       "
-      class="text-danger mt-1"
+      class="error-message"
     >
       <small *ngIf="signInForm.get('username')?.errors?.['required']">
         User Name is required.
@@ -41,22 +53,24 @@
     </div>
   </div>
 
-  <!-- Password -->
-  <div class="col-md-6">
-    <label for="password" class="form-label">Password</label>
+  <!-- Password Field -->
+  <div class="form-group">
+    <label for="password">Password</label>
     <input
       type="password"
-      class="form-control"
       id="password"
       formControlName="password"
       placeholder="Enter your password"
+      [ngClass]="{
+        'is-invalid': signInForm.get('password')?.touched && signInForm.get('password')?.invalid
+      }"
     />
     <div
       *ngIf="
         signInForm.get('password')?.touched &&
         signInForm.get('password')?.invalid
       "
-      class="text-danger mt-1"
+      class="error-message"
     >
       <small *ngIf="signInForm.get('password')?.errors?.['required']">
         Password is required.
@@ -65,15 +79,15 @@
   </div>
 
   <!-- Submit Button -->
-  <div class="col-12 d-flex justify-content-between align-items-center">
+  <div class="form-footer">
     <button
       type="submit"
-      class="btn btn-primary px-5"
+      class="btn-submit"
       [disabled]="signInForm.invalid"
     >
       Sign In
     </button>
-    <a routerLink="/auth/sign-up" class="text-primary">
+    <a routerLink="/auth/sign-up" class="create-account-link">
       Create new account?
     </a>
   </div>

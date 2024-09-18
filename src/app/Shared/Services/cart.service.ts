@@ -56,5 +56,16 @@ export class CartService {
     return this.http.patch(`${this.api}?quantity=${quantity}&itemId=${itemId}`, null, { headers }).pipe(
       catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
     );
-  }  
+  }
+  clearCart(){
+    if (!this.sharedService.isAuthenticated()) {
+      this.router.navigate(['/auth/sign-in']);
+      return EMPTY;
+    }
+    const headers = this.sharedService.getHeaders();
+    const url:string = `${this.api}/user/${this.sharedService.getUserIdFromToken()}`
+    return this.http.delete<void>(url, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
+    );
+  }
 }

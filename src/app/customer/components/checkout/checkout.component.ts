@@ -105,12 +105,20 @@ export class CheckoutComponent implements OnInit {
   
     this.orderDetailsService.addOrder(orderDetails).subscribe({
       next: (response) => {
-        this.router.navigate(['/order']);
+        this.cartService.clearCart().subscribe({
+          next: () => {
+            this.router.navigate(['/order']);
+          },
+          error: (error) => {
+            this.router.navigate(['/server-error']);
+          }
+        });
       },
       error: (error) => {
         this.router.navigate(['/server-error']);
-      },
+      }
     });
+    
   }
   
 }

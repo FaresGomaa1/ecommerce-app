@@ -1,55 +1,124 @@
-form {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+// Variables for color consistency
+$primary-color: #007bff;
+$danger-color: #dc3545;
+$success-color: #28a745;
+$light-bg-color: #f8f9fa;
+$border-radius: 8px;
 
-.form-label {
-  font-weight: 600;
-  color: #495057;
-}
-
-.form-control {
-  border-radius: 4px;
-  transition: border-color 0.3s ease;
-}
-
-.form-control:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.text-danger {
-  font-size: 0.875rem;
-}
-
-button[type="submit"] {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-button[type="submit"]:hover {
-  background-color: #0056b3;
-  border-color: #004085;
-}
-
-button[type="submit"]:disabled {
-  background-color: #c0c0c0;
-  border-color: #b8b8b8;
-}
-
-a {
-  font-size: 0.875rem;
-  text-decoration: underline;
-  color: #007bff;
-}
-
-a:hover {
-  color: #0056b3;
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: $primary-color;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .alert {
-  font-size: 1rem;
-  margin-top: 20px;
+  font-size: 14px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+
+  &-success {
+    background-color: lighten($success-color, 40%);
+    border-color: lighten($success-color, 30%);
+    color: $success-color;
+  }
+
+  &-danger {
+    background-color: lighten($danger-color, 40%);
+    border-color: lighten($danger-color, 30%);
+    color: $danger-color;
+  }
+
+  small {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Form container styling
+form {
+  background-color: $light-bg-color;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: $border-radius;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: darken($primary-color, 20%);
+    margin-bottom: 5px;
+  }
+
+  input {
+    border-radius: $border-radius;
+    border: 1px solid lighten($primary-color, 40%);
+    padding: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+    }
+
+    &.is-valid {
+      border-color: $success-color;
+      box-shadow: 0 0 4px rgba(40, 167, 69, 0.25);
+    }
+
+    &.is-invalid {
+      border-color: $danger-color;
+      box-shadow: 0 0 4px rgba(220, 53, 69, 0.25);
+    }
+  }
+
+  .valid-feedback {
+    font-size: 12px;
+    color: $success-color;
+    margin-top: 5px;
+    font-weight: 500;
+  }
+
+  .text-danger {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+}
+
+// Submit button styling
+button[type='submit'] {
+  background-color: $primary-color;
+  border: none;
+  font-size: 16px;
+  padding: 12px 30px;
+  border-radius: $border-radius;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &:disabled {
+    background-color: lighten($primary-color, 20%);
+  }
+}
+
+// Link styling
+a {
+  color: $primary-color;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
 }
