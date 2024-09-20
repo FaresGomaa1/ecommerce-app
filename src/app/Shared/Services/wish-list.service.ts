@@ -55,7 +55,7 @@ export class WishListService {
 
   getWishListItems(): Observable<IWishListGet[]> {
     const url = `${this.api}?userId=${this.getUserId()}`;
-    return this.http.get<IWishListGet[]>(url, { headers: this.getHeaders() });
+    return this.http.get<IWishListGet[]>(url, { headers: this.getHeaders() })
   }
 
   deleteWishListItem(itemId: number): Observable<void> {

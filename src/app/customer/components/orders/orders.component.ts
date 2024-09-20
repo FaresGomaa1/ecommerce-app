@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IOrder } from 'src/app/Shared/Interfaces/iorder';
 import { OrderService } from 'src/app/Shared/Services/order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -12,7 +13,7 @@ export class OrdersComponent implements OnInit {
   rejectedOrders: IOrder[] = [];
   deliveredOrders: IOrder[] = [];
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService,private router: Router) {}
 
   ngOnInit(): void {
     this.loadOrders();
@@ -42,5 +43,8 @@ export class OrdersComponent implements OnInit {
           console.warn(`Unknown order status: ${order.status}`);
       }
     });
+  }
+  viewOrderDetails(orderId: number) {
+    this.router.navigate([`/order-details/${orderId}`]);
   }
 }

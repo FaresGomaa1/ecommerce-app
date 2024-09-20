@@ -74,4 +74,8 @@ export class OrderDetailsService {
       (error) => console.error('Error deleting order:', error)
     );
   }
+  getOrderDetails(orderId:number):Observable<IOrderDetails[]>{
+    const headers = this.sharedService.getHeaders();
+    return this.http.get<IOrderDetails[]>(`${this.baseApi}/order/${orderId}`,{headers})
+  }
 }

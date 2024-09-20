@@ -1,75 +1,178 @@
 .footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-  
-    .container {
+  background: linear-gradient(135deg, #222, #333);
+  color: #f8f9fa;
+  padding: 40px 0;
+  border-top: 2px solid #444;
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: start;
+
+    .footer-content {
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
-      align-items: start;
-  
-      .footer-content {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-  
-        .footer-section {
-          flex: 1;
-  
-          h4 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            color: #f4f4f4;
-          }
-  
-          ul {
-            list-style: none;
-            padding: 0;
-  
-            li {
-              margin-bottom: 8px;
-  
-              a {
-                color: #ccc;
-                text-decoration: none;
-                transition: color 0.3s;
-  
-                &:hover {
-                  color: #fff;
-                }
-              }
-            }
+      width: 100%;
+      gap: 30px;
+
+      .footer-section {
+        flex: 1;
+        min-width: 200px;
+        padding: 0 15px;
+        
+        h4 {
+          font-size: 1.4rem;
+          margin-bottom: 15px;
+          color: #f8f9fa;
+          position: relative;
+          &:after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background-color: #007bff;
+            bottom: -5px;
+            left: 0;
           }
         }
-  
-        .social-media-links {
-          display: flex;
-          gap: 10px;
-  
+
+        ul {
+          list-style: none;
+          padding: 0;
+
           li {
+            margin-bottom: 10px;
+            
             a {
-              display: flex;
-              align-items: center;
-              gap: 5px;
-  
-              i {
-                font-size: 1.2em;
+              color: #ccc;
+              text-decoration: none;
+              font-size: 1rem;
+              transition: color 0.3s ease-in-out, padding-left 0.3s;
+
+              &:hover {
+                color: #007bff;
+                padding-left: 5px;
               }
             }
           }
         }
       }
-    }
-  
-    .footer-bottom {
-      text-align: center;
-      margin-top: 20px;
-  
-      p {
-        margin: 0;
-        font-size: 0.9em;
-        color: #aaa;
+
+      .social-media-links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        
+        li {
+          a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ccc;
+            font-size: 1rem;
+            transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+            i {
+              font-size: 1.5rem;
+              transition: transform 0.3s ease-in-out;
+            }
+
+            &:hover {
+              color: #007bff;
+
+              i {
+                transform: rotate(10deg) scale(1.2);
+              }
+            }
+          }
+        }
       }
     }
   }
-  
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #aaa;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+/* Responsive Design for Tablets and Smaller Screens */
+@media (max-width: 1024px) {
+  .footer .container {
+    flex-direction: column;
+  }
+
+  .footer .footer-content {
+    flex-direction: column;
+    gap: 40px; /* Increase gap for better spacing */
+    align-items: flex-start;
+  }
+
+  .footer .footer-section {
+    flex: none; /* Remove flex behavior for better stacking */
+    width: 100%; /* Full width sections */
+    text-align: left; /* Ensure proper alignment */
+  }
+
+  .footer .social-media-links {
+    flex-direction: row; /* Switch to row layout for social links */
+    justify-content: flex-start; /* Align links to the start */
+    gap: 20px; /* Increased gap for easier tap on mobile */
+  }
+}
+
+/* Responsive Design for Mobile Phones */
+@media (max-width: 768px) {
+  .footer {
+    padding: 20px 0;
+  }
+
+  .footer .footer-content {
+    gap: 20px; /* Reduce gap for smaller screens */
+    align-items: center; /* Center align on smaller screens */
+  }
+
+  .footer .footer-section {
+    text-align: center; /* Center-align sections */
+    margin-bottom: 20px; /* Add margin between sections */
+  }
+
+  .footer .footer-section ul li a {
+    font-size: 0.9rem; /* Adjust font size for readability */
+  }
+
+  .footer .social-media-links {
+    justify-content: center; /* Center social icons */
+    gap: 15px; /* Reduce gap for mobile devices */
+  }
+
+  .footer .footer-bottom p {
+    font-size: 0.8rem; /* Adjust font size for smaller screens */
+  }
+}
+
+/* Responsive Design for Very Small Devices (Below 480px) */
+@media (max-width: 480px) {
+  .footer .footer-section h4 {
+    font-size: 1.2rem; /* Slightly smaller heading for mobile */
+  }
+
+  .footer .footer-section ul li a {
+    font-size: 0.85rem; /* Smaller text for ultra-small screens */
+  }
+
+  .footer .footer-bottom p {
+    font-size: 0.75rem; /* Further reduction for bottom text */
+  }
+}

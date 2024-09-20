@@ -1,11 +1,11 @@
-<div class="container product-details">
+<div class="container product-details mt-5">
   <div class="row">
     <!-- Image Slider -->
-    <div class="col-md-6">
-      <div id="productImageCarousel" class="carousel slide shadow-lg rounded-lg" data-bs-ride="carousel">
+    <div class="col-lg-6">
+      <div id="productImageCarousel" class="carousel slide shadow-lg rounded-3 overflow-hidden" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item" *ngFor="let photo of product?.photos; let i = index" [ngClass]="{'active': i === 0}">
-            <img [src]="'../../../../assets/products/' + photo" class="d-block w-100 rounded-lg" [alt]="'Image of ' + product.name">
+            <img [src]="'../../../../assets/products/' + photo" class="d-block w-100" [alt]="'Image of ' + product.name">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
@@ -20,34 +20,34 @@
     </div>
 
     <!-- Product Info -->
-    <div class="col-md-6">
-      <div class="product-details-content p-4 rounded-lg shadow-lg bg-light">
-        <h1 class="product-name display-4 text-dark">{{ product.name }}</h1>
+    <div class="col-lg-6 mt-4 mt-lg-0">
+      <div class="product-details-content p-4 rounded-3 shadow-lg bg-white">
+        <h2 class="product-name text-dark mb-3">{{ product.name }}</h2>
 
         <!-- Rating and Stock Status -->
-        <div class="rating-stock-status d-flex align-items-center mb-3">
-          <div class="rating">
+        <div class="rating-stock d-flex align-items-center justify-content-between mb-4">
+          <div class="rating d-flex">
             <i class="fas fa-star" *ngFor="let star of getStars(product.averageRating || 0)"></i>
           </div>
-          <div class="stock-status ms-auto">
+          <div class="stock-status">
             <span [ngClass]="{
-              'last-piece': availableQuantity === 1, 
-              'out-of-stock': availableQuantity === 0, 
-              'in-stock': availableQuantity > 1
+              'text-danger': availableQuantity === 0, 
+              'text-warning': availableQuantity === 1, 
+              'text-success': availableQuantity > 1
             }">
               {{ availableQuantity > 0 ? availableQuantity + ' pieces left' : 'Out of stock' }}
             </span>
           </div>
         </div>
-
+       <h3> <strong>{{product.price}} EGP</strong></h3>
         <!-- Product Description -->
-        <p class="product-description lead text-muted">{{ product.description }}</p>
+        <p class="product-description text-muted mb-4">{{ product.description }}</p>
 
         <!-- Color, Size, and Quantity Selection -->
-        <div class="color-size-selection">
-          <div class="form-group mb-4">
-            <label for="colorSelect" class="form-label">Select Color:</label>
-            <select id="colorSelect" class="form-select shadow-sm" [(ngModel)]="selectedColorId" (change)="onColorChange()">
+        <div class="selections">
+          <div class="mb-3">
+            <label for="colorSelect" class="form-label">Color:</label>
+            <select id="colorSelect" class="form-select" [(ngModel)]="selectedColorId" (change)="onColorChange()">
               <option [value]="null">Select Color</option>
               <option *ngFor="let colorId of availableColorIds" [value]="colorId">
                 {{ getColorName(colorId) }}
@@ -55,9 +55,9 @@
             </select>
           </div>
 
-          <div class="form-group mb-4" *ngIf="availableSizeIds.size > 0">
-            <label for="sizeSelect" class="form-label">Select Size:</label>
-            <select id="sizeSelect" class="form-select shadow-sm" [(ngModel)]="selectedSizeId" (change)="onSizeChange()">
+          <div class="mb-3" *ngIf="availableSizeIds.size > 0">
+            <label for="sizeSelect" class="form-label">Size:</label>
+            <select id="sizeSelect" class="form-select" [(ngModel)]="selectedSizeId" (change)="onSizeChange()">
               <option [value]="null">Select Size</option>
               <option *ngFor="let sizeId of availableSizeIds" [value]="sizeId">
                 {{ getSizeName(sizeId) }}
@@ -65,16 +65,16 @@
             </select>
           </div>
 
-          <div class="form-group mb-4">
-            <label for="quantitySelect" class="form-label">Select Quantity:</label>
-            <input id="quantitySelect" type="number" class="form-control shadow-sm" [(ngModel)]="selectedQuantity" [attr.max]="availableQuantity" min="1">
+          <div class="mb-3">
+            <label for="quantitySelect" class="form-label">Quantity:</label>
+            <input id="quantitySelect" type="number" class="form-control" [(ngModel)]="selectedQuantity" [attr.max]="availableQuantity" min="1">
           </div>
         </div>
 
         <!-- Add to Cart & Wishlist -->
-        <div class="actions mt-4">
-          <button class="btn btn-primary shadow-lg rounded-pill px-4 py-2" [disabled]="!isDataValid()" (click)="addToCart()">
-            <i class="fas fa-shopping-cart"></i> Add to Cart
+        <div class="actions d-flex align-items-center mt-4">
+          <button class="btn btn-primary shadow-lg px-4 py-2 me-3" [disabled]="!isDataValid()" (click)="addToCart()">
+            <i class="fas fa-shopping-cart me-2"></i>Add to Cart
           </button>
           <app-wish-list-button [productId]="product.id"></app-wish-list-button>
         </div>

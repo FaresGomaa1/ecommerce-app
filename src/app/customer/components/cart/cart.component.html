@@ -40,7 +40,7 @@
       <tbody>
         <tr *ngFor="let item of cartItems" class="text-center">
           <td class="product-info">
-            <span>{{ item.productName }}</span>
+            <span (click)="view(item.productId)"><a>{{item.productName}}</a></span>
           </td>
           <td>{{ item.color }}</td>
           <td>{{ item.size }}</td>
@@ -59,9 +59,12 @@
             <button class="btn btn-danger btn-sm" (click)="remove(item.id)">
               <i class="fas fa-trash-alt"></i> Remove
             </button>
-            <button class="btn btn-link btn-sm" (click)="view(item.productId)">
+            <!-- <button class="btn btn-link btn-sm" (click)="view(item.productId)">
               <i class="fas fa-info-circle"></i> View Details
-            </button>
+            </button> -->
+            <app-wish-list-button
+            [productId]="item.productId"
+          ></app-wish-list-button>
           </td>
         </tr>
       </tbody>

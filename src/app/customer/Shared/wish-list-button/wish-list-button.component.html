@@ -1,23 +1,20 @@
 <div class="wishlist-button-container">
-    <!-- Loading Spinner -->
-    <div *ngIf="isLoading" class="loading-overlay">
-      <div class="spinner-border text-light" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-light" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-  
-    <!-- Add to Wishlist Button -->
-    <button *ngIf="!isLoading && !isItemExist" class="btn wishlist-btn add-btn" (click)="addToWishlist()">
-      <i class="fa fa-heart"></i>
-      <span class="btn-text">Add to Wishlist</span>
-      <div class="btn-background"></div>
-    </button>
-  
-    <!-- Remove from Wishlist Button -->
-    <button *ngIf="!isLoading && isItemExist" class="btn wishlist-btn remove-btn" (click)="removeFromWishlist()">
-      <i class="fa fa-check"></i>
-      <span class="btn-text">Added to Wishlist</span>
-      <div class="btn-background"></div>
-    </button>
   </div>
-  
+
+  <!-- Add to Wishlist Button -->
+  <button *ngIf="!isLoading && !isItemExist" class="btn wishlist-btn add-btn" (click)="addToWishlist()">
+    <i class="fa fa-heart"></i>
+    <span class="btn-text">Wishlist</span>
+  </button>
+
+  <!-- Remove from Wishlist Button -->
+  <button *ngIf="!isLoading && isItemExist" class="btn wishlist-btn remove-btn" (click)="removeFromWishlist()">
+    <i class="fa fa-check"></i>
+    <span class="btn-text">Added</span>
+  </button>
+</div>

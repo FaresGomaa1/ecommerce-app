@@ -19,6 +19,8 @@ export class ShopComponent implements OnInit {
   message:string = "";
   snackMessage: string = '';
 isSuccess: boolean = true;
+numberOfPages:number = 0;
+currentPage: number = 1;
   // Ratings array is now readonly since it doesn't change dynamically
   readonly ratings = [
     { id: 'fiveStars', stars: 5, selected: false },
@@ -54,13 +56,12 @@ isSuccess: boolean = true;
       },
     });
   }
-
-  // Fetches all products and handles errors
   loadAllProducts(): void {
     this.productService.getAllProducts().subscribe({
       next: (products) => {
         this.products = products;
         this.filterProducts = products;
+        // this.pagination(1)
       },
       error: (err) => {
         console.error('Error fetching products', err);
@@ -69,7 +70,6 @@ isSuccess: boolean = true;
   }
   onSubmit(): void 
   {
-    console.log(this.filterProducts)
     let products:IProduct[] = [];
     this.searchProducts(this.searchTerm, this.products);
     this.sortProducts(this.sortWay, this.filterProducts);
@@ -111,11 +111,25 @@ isSuccess: boolean = true;
         this.filterProducts = products;
         break;
     }
-    
+    // this.pagination(this.currentPage);
   }
   viewDeails(productId: number){
     this.productService.viewDetails(productId);
   }
-  addItemToWishList(itemId: number): void {
+  // pagination(pageNumber: number) {
+  //   this.currentPage = pageNumber;
+  //   let itemPerPage = 4;
+  //   this.numberOfPages = Math.ceil(this.products.length / itemPerPage);
+  //   let firstIndex = (this.currentPage - 1) * itemPerPage;
+  //   let lastIndex = firstIndex + itemPerPage;
+  
+  //   // Ensure lastIndex does not exceed the length of the array
+  //   lastIndex = Math.min(lastIndex, this.products.length);
+    
+  //   this.filterProducts = this.filterProducts.slice(firstIndex, lastIndex);
+  // }
+  resetFilters(){
+    window.location.reload();
   }
+  
 }

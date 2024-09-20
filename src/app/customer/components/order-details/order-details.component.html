@@ -1,0 +1,78 @@
+<div class="container mt-4">
+    <h2 class="mb-4 text-center"><i class="fas fa-receipt"></i> Order Details</h2>
+  
+    <!-- Order Information -->
+    <div class="card mb-4 shadow-lg">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-info-circle"></i> Order Information</h5>
+      </div>
+      <div class="card-body">
+        <p><strong>Invoice Number:</strong> <span class="text-muted">{{ order.invoiceNumber }}</span></p>
+        <p><strong>Opening Date:</strong> <span class="text-muted">{{ order.openingDate | date: "shortDate" }}</span></p>
+        <p>
+          <strong>Status:</strong>
+          <span class="badge" [ngClass]="{
+              'bg-success': order.status === 'Delivered',
+              'bg-warning': order.status === 'Pending',
+              'bg-danger': order.status === 'Rejected'
+            }">{{ order.status }}</span>
+        </p>
+        <p *ngIf="order.status !== 'Pending' && order.status !== 'Delivered'">
+          <strong>Comments:</strong> <span class="text-muted">{{ order.comments }}</span>
+        </p>
+        <p *ngIf="order.status !== 'Pending'">
+          <strong>Closing Date:</strong> <span class="text-muted">{{ order.closingDate | date: "shortDate" }}</span>
+        </p>
+      </div>
+    </div>
+  
+    <!-- Address Information -->
+    <div class="card mb-4 shadow-lg">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Shipping Address</h5>
+      </div>
+      <div class="card-body">
+        <p><strong>Country:</strong> <span class="text-muted">{{ address.country }}</span></p>
+        <p><strong>City:</strong> <span class="text-muted">{{ address.city }}</span></p>
+        <p><strong>State:</strong> <span class="text-muted">{{ address.state }}</span></p>
+        <p><strong>Address Line:</strong> <span class="text-muted">{{ address.addressLine }}</span></p>
+      </div>
+    </div>
+  
+    <!-- Order Details -->
+    <div class="card shadow-lg">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-box-open"></i> Order Items</h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Color</th>
+              <th>Size</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detail of orderDetails">
+              <td>{{ detail.productName }}</td>
+              <td>{{ detail.colorName }}</td>
+              <td>{{ detail.sizeName }}</td>
+              <td>{{ detail.quantity }}</td>
+              <td>{{ detail.price | currency:'EGP' }}</td>
+              <td>{{ detail.quantity * detail.price | currency:'EGP' }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <!-- Total Calculation -->
+        <div class="d-flex justify-content-end mt-3">
+          <h5 class="text-primary"><i class="fas fa-calculator"></i> Total: <strong>{{ getTotal() | currency:'EGP' }}</strong></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  

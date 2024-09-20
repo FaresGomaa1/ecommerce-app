@@ -64,6 +64,6 @@ export class ProductService {
 
   viewDetails(productId: number): void {
     const url = this.router.createUrlTree(['/product-details', productId]).toString();
-    window.open(url, '_blank');
+    window.open(url);
   }
 }

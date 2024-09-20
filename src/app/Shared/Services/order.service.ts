@@ -110,4 +110,8 @@ export class OrderService {
       catchError((error: HttpErrorResponse) => this.sharedService.handleError(error))
     );
   }
+  getOrderById(orderId:number):Observable<IOrder>{
+    const headers = this.sharedService.getHeaders();
+    return this.http.get<IOrder>(`${this.baseUrl}/${orderId}`,{ headers })
+  }
 }

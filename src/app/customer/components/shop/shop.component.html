@@ -8,9 +8,17 @@
           <ul class="nav flex-column">
             <li class="nav-item" *ngFor="let category of categories">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" [id]="'category-' + category.id"
-                  [(ngModel)]="category.selected" name="category-{{ category.id }}" />
-                <label class="form-check-label" [for]="'category-' + category.id">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'category-' + category.id"
+                  [(ngModel)]="category.selected"
+                  name="category-{{ category.id }}"
+                />
+                <label
+                  class="form-check-label"
+                  [for]="'category-' + category.id"
+                >
                   {{ category.name }}
                 </label>
               </div>
@@ -20,19 +28,36 @@
           <h5 class="sidebar-title mt-4">Price</h5>
           <div class="mb-3">
             <label for="minPrice" class="form-label">Min Price</label>
-            <input type="number" id="minPrice" class="form-control" [(ngModel)]="minPrice" name="minPrice" />
+            <input
+              type="number"
+              id="minPrice"
+              class="form-control"
+              [(ngModel)]="minPrice"
+              name="minPrice"
+            />
           </div>
           <div class="mb-3">
             <label for="maxPrice" class="form-label">Max Price</label>
-            <input type="number" id="maxPrice" class="form-control" [(ngModel)]="maxPrice" name="maxPrice" />
+            <input
+              type="number"
+              id="maxPrice"
+              class="form-control"
+              [(ngModel)]="maxPrice"
+              name="maxPrice"
+            />
           </div>
 
           <h5 class="sidebar-title mt-4">Rating</h5>
           <ul class="nav flex-column">
             <li class="nav-item" *ngFor="let rating of ratings">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" [id]="rating.id" [(ngModel)]="rating.selected"
-                  name="{{ rating.id }}" />
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="rating.id"
+                  [(ngModel)]="rating.selected"
+                  name="{{ rating.id }}"
+                />
                 <label class="form-check-label" [for]="rating.id">
                   {{ rating.stars }} stars
                 </label>
@@ -49,70 +74,135 @@
 
     <!-- Main Content Area -->
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+      <div
+        class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4"
+      >
         <div class="input-group w-100 w-md-50 mb-3 mb-md-0">
-          <input type="text" class="form-control" [(ngModel)]="searchTerm" id="search"
-            placeholder="Search products..." />
-          <button class="btn btn-outline-secondary" (click)="searchProducts(searchTerm,products)" type="button">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchTerm"
+            id="search"
+            placeholder="Search products..."
+          />
+          <button
+            class="btn btn-outline-secondary"
+            (click)="searchProducts(searchTerm, products)"
+            type="button"
+          >
             <i class="fa fa-search"></i>
           </button>
         </div>
-
         <div class="btn-group">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <button
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
             Sort By
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" (click)="sortProducts('price-asc',products)">Price (Low to High)</a></li>
-            <li><a class="dropdown-item" (click)="sortProducts('price-desc',products)">Price (High to Low)</a></li>
-            <li><a class="dropdown-item" (click)="sortProducts('rating-asc',products)">Rating (Low to High)</a></li>
-            <li><a class="dropdown-item" (click)="sortProducts('rating-desc',products)">Rating (High to Low)</a></li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="sortProducts('price-asc', products)"
+                >Price (Low to High)</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="sortProducts('price-desc', products)"
+                >Price (High to Low)</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="sortProducts('rating-asc', products)"
+                >Rating (Low to High)</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                (click)="sortProducts('rating-desc', products)"
+                >Rating (High to Low)</a
+              >
+            </li>
           </ul>
         </div>
       </div>
+<!-- Check if no products match the filter -->
+<div *ngIf="filterProducts.length === 0" class="no-products-container text-center my-5 p-4">
+  <div class="no-products-icon mb-4">
+    <i class="fa fa-exclamation-triangle fa-5x text-danger"></i>
+  </div>
+  <h2 class="no-products-title">No Products Available</h2>
+  <p class="no-products-message">
+    Oops! It seems like no products match your current filters. Please modify the filters or try searching for something else.
+  </p>
+  <button class="btn btn-primary btn-glow mt-4" (click)="resetFilters()">Reset Filters</button>
+</div>
+
 
       <!-- Product Cards -->
-      <div class="row">
-        <div *ngFor="let product of filterProducts" class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+      <div *ngIf="filterProducts.length > 0" class="row">
+        <div
+          *ngFor="let product of filterProducts"
+          class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+        >
           <div class="card product-card shadow-sm">
-            <img [src]="'../../../../assets/products/' + product.photoUrl" (click)="viewDeails(product.id)" class="card-img-top" [alt]="product.name" />
+            <img
+              [src]="'../../../../assets/products/' + product.photoUrl"
+              (click)="viewDeails(product.id)"
+              class="card-img-top"
+              [alt]="product.name"
+            />
             <div class="card-body d-flex flex-column justify-content-between">
               <h5 class="card-title">
-                <a target="_blank" [routerLink]="['/product-details', product.id]" class="product-name"
-                  title="Click to view details">
+                <a
+                  [routerLink]="['/product-details', product.id]"
+                  class="product-name"
+                  title="Click to view details"
+                >
                   {{ product.name }}
                 </a>
               </h5>
               <p class="card-text">{{ product.price.toFixed(2) }} EGP</p>
               <div class="rating mb-3">
-                <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" class="fa"
-                  [ngClass]="{'fa-star': product.averageRating > i, 'fa-star-o': product.averageRating <= i, 'checked': product.averageRating > i}">
+                <span
+                  *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                  class="fa"
+                  [ngClass]="{
+                    'fa-star': product.averageRating > i,
+                    'fa-star-o': product.averageRating <= i,
+                    checked: product.averageRating > i
+                  }"
+                >
                 </span>
               </div>
-              <app-wish-list-button [productId]="product.id"></app-wish-list-button>
+              <app-wish-list-button
+                [productId]="product.id"
+              ></app-wish-list-button>
             </div>
           </div>
         </div>
       </div>
 
-      <nav aria-label="Page navigation example">
-        
+      <!-- <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
+          <li
+            class="page-item"
+            *ngFor="let i of [].constructor(numberOfPages); let index = index"
+            (click)="pagination(index + 1)"
+          >
+            <a class="page-link">{{ index + 1 }}</a>
           </li>
         </ul>
-      </nav>
+      </nav> -->
+      
     </main>
   </div>
 </div>

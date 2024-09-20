@@ -18,7 +18,7 @@
               <h4>Invoice #{{ order.invoiceNumber }}</h4>
               <span class="badge bg-info">{{ order.openingDate | date }}</span>
             </div>
-            <button class="btn btn-primary mt-2">View Details</button>
+            <button class="btn btn-primary mt-2"(click)="viewOrderDetails(order.id)">View Details</button>
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@
                 <span class="badge bg-success">{{ order.closingDate | date }}</span>
               </div>
             </div>
-            <button class="btn btn-primary mt-2">View Details</button>
+            <button class="btn btn-primary mt-2"(click)="viewOrderDetails(order.id)">View Details</button>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
               </div>
             </div>
             <p>{{order.comments}}</p>
-            <button class="btn btn-primary mt-2">View Details</button>
+            <button class="btn btn-primary mt-2" (click)="viewOrderDetails(order.id)">View Details</button>
           </div>
         </div>
       </div>

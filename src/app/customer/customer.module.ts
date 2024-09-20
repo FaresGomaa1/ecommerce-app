@@ -19,6 +19,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { GetAddressComponent } from './components/checkout/get-address/get-address.component';
 import { WishListButtonComponent } from './Shared/wish-list-button/wish-list-button.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { WishListButtonComponent } from './Shared/wish-list-button/wish-list-but
     CheckoutComponent,
     GetAddressComponent,
     WishListButtonComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     CommonModule,

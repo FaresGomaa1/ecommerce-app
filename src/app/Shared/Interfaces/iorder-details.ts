@@ -21,3 +21,6 @@ export interface IOrderDetailsBase {
   price: number;
   orderId: number;
 }
+export interface IOrderDetais extends IOrderDetailsBase {
+  id: number;
+}
