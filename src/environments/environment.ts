@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
-    apiUrl: 'http://localhost:5052/api',
+    production: true,
+    apiUrl: 'http://FaresGroup.somee.com/api',
   };
   

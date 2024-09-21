@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://yourproductionapi.com/api',
+    apiUrl: 'http://FaresGroup.somee.com/api',
   };
   
